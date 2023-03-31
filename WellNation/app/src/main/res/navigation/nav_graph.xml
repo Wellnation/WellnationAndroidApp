@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.shubhasai.wellnation.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_bookappointmentFragment"
+            app:destination="@id/bookappointmentFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_healthpassportFragment"
+            app:destination="@id/healthpassportFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_blogFragment"
+            app:destination="@id/blogFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_booktestsFragment"
+            app:destination="@id/booktestsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_diseasesFragment"
+            app:destination="@id/diseasesFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_hospitalsFragment"
+            app:destination="@id/hospitalsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_helpFragment"
+            app:destination="@id/helpFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.shubhasai.wellnation.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/bookappointmentFragment"
+        android:name="com.shubhasai.wellnation.BookappointmentFragment"
+        android:label="fragment_bookappointment"
+        tools:layout="@layout/fragment_bookappointment" />
+    <fragment
+        android:id="@+id/healthpassportFragment"
+        android:name="com.shubhasai.wellnation.HealthpassportFragment"
+        android:label="fragment_healthpassport"
+        tools:layout="@layout/fragment_healthpassport" />
+    <fragment
+        android:id="@+id/blogFragment"
+        android:name="com.shubhasai.wellnation.BlogFragment"
+        android:label="fragment_blog"
+        tools:layout="@layout/fragment_blog" />
+    <fragment
+        android:id="@+id/booktestsFragment"
+        android:name="com.shubhasai.wellnation.BooktestsFragment"
+        android:label="fragment_booktests"
+        tools:layout="@layout/fragment_booktests" />
+    <fragment
+        android:id="@+id/diseasesFragment"
+        android:name="com.shubhasai.wellnation.DiseasesFragment"
+        android:label="fragment_diseases"
+        tools:layout="@layout/fragment_diseases" />
+    <fragment
+        android:id="@+id/hospitalsFragment"
+        android:name="com.shubhasai.wellnation.HospitalsFragment"
+        android:label="fragment_hospitals"
+        tools:layout="@layout/fragment_hospitals" />
+    <fragment
+        android:id="@+id/helpFragment"
+        android:name="com.shubhasai.wellnation.HelpFragment"
+        android:label="fragment_help"
+        tools:layout="@layout/fragment_help" />
+</navigation>

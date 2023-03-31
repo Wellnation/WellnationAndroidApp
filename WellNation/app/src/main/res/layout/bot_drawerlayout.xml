@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/bottom_sheet_background"
+        android:padding="5dp"
+        android:layout_gravity="top">
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/bot" />
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:text="Hey I am Well. What can I do for you? "
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:layout_marginStart="16dp" />
+
+    </LinearLayout>
+
+    <WebView
+        android:id="@+id/webview_bot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>
