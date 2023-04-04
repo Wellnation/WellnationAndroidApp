@@ -69,10 +69,23 @@
         android:id="@+id/hospitalsFragment"
         android:name="com.shubhasai.wellnation.HospitalsFragment"
         android:label="fragment_hospitals"
-        tools:layout="@layout/fragment_hospitals" />
+        tools:layout="@layout/fragment_hospitals" >
+        <action
+            android:id="@+id/action_hospitalsFragment_to_hospitaldetailsFragment"
+            app:destination="@id/hospitaldetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/helpFragment"
         android:name="com.shubhasai.wellnation.HelpFragment"
         android:label="fragment_help"
         tools:layout="@layout/fragment_help" />
+    <fragment
+        android:id="@+id/hospitaldetailsFragment"
+        android:name="com.shubhasai.wellnation.HospitaldetailsFragment"
+        android:label="fragment_hospitaldetails"
+        tools:layout="@layout/fragment_hospitaldetails" >
+        <argument
+            android:name="hospitaid"
+            app:argType="string" />
+    </fragment>
 </navigation>

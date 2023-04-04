@@ -14,22 +14,16 @@ import com.shubhasai.wellnation.databinding.ActivityOnboardingBinding
 class OnboardingActivity : AppCompatActivity() {
     private var firebaseauth: FirebaseAuth?=null
     private lateinit var binding:ActivityOnboardingBinding
-    private var promptsarray = arrayListOf<String>("Browse through a list of nearby hospitals, clinics and Doctors and See their ratings, reviews, and specialties","No stress of losing any health documents. Save all your Record at one place", "Sign Up and Enter to world to stay healthy")
+    private var promptsarray = arrayListOf<String>("Connect with the care you need, when you need it","Book appointments, tests, and consultations with ease", "Stay on top of your health with personalized medicine reminders!","Discover insightful health blogs and stay informed!","Empower yourself with a digital health passport and take control of your health!")
     private var current_position:Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityOnboardingBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        firebaseauth = FirebaseAuth.getInstance()
-        var curuser : FirebaseUser? = firebaseauth?.currentUser
-        if (curuser!=null){
-            curuser.uid
-            getuserdetails(curuser.uid)
-        }
         binding.pbar.curValue = current_position+1
         binding.onboardingPrompts.text = promptsarray[current_position]
         binding.btnContinue.setOnClickListener {
-            if(current_position<2){
+            if(current_position<4){
                 current_position++
                 UpdateUnboardingPrompts()
             }
@@ -44,31 +38,25 @@ class OnboardingActivity : AppCompatActivity() {
     fun UpdateUnboardingPrompts(){
         binding.pbar.curValue = current_position+1
         binding.onboardingPrompts.text = promptsarray[current_position]
-    }
-    fun getuserdetails(userId:String){
-        val firestore = FirebaseFirestore.getInstance()
-        // Replace "collectionPath" with your actual Firestore collection path
-        val usersCollectionRef = firestore.collection("publicusers")
-
-        usersCollectionRef.document(userId).get()
-            .addOnSuccessListener { document ->
-                if (document != null && document.exists()) {
-                    // Convert the document data to a User object
-                    val user = document.toObject(userdetails::class.java)
-                    Userinfo.email = user?.email.toString()
-                    Userinfo.uname = user?.name.toString()
-                    Userinfo.phonenumber = user?.phonenumber.toString()
-                    Userinfo.userid = user?.userid.toString()
-                    startActivity(Intent(this,MainActivity::class.java))
-                } else {
-                    Log.d("Firebase Execption", "No such document")
-                }
-
+        when(current_position){
+            1 -> {
+                binding.animationView.setAnimation(R.raw.sscreentwo)
+                binding.animationView.playAnimation()
             }
-            .addOnFailureListener { exception ->
-                Log.d("Firebase Execption", "Error getting document: $exception")
+            2 -> {
+                binding.animationView.setAnimation(R.raw.sscreenthree)
+                binding.animationView.playAnimation()
             }
-
+            3 -> {
+                binding.animationView.setAnimation(R.raw.sscreenfour)
+                binding.animationView.playAnimation()
+            }
+            4 -> {
+                binding.animationView.setAnimation(R.raw.sscreenfive)
+                binding.animationView.playAnimation()
+            }
+        }
     }
+
 }
 

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.PREVENT_POWER_KEY" />
 
     <application
         android:allowBackup="true"
@@ -14,6 +15,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WellNation"
         tools:targetApi="31">
+        <activity
+            android:name=".SplashActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".SignupActivity"
             android:exported="false">
@@ -31,12 +44,10 @@
         <activity
             android:name=".OnboardingActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -48,6 +59,18 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <receiver android:name=".PowerbuttonBroadcastReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.SCREEN_OFF" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".VolumeButtonToastReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.shubhasai.wellnation.VOLUME_BUTTON_TOAST" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

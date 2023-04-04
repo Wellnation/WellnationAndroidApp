@@ -6,5 +6,6 @@ class Userinfo {
         var uname:String = ""
         var email:String = ""
         var phonenumber:String = ""
+        var hospitalclicked:String = ""
     }
 }

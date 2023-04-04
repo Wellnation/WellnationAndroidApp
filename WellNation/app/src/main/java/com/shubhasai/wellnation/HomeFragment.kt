@@ -33,14 +33,12 @@ class HomeFragment : Fragment() {
         val height = displayMetrics.heightPixels
         Log.d("height",height.toString())
         val isSmallScreen = width <= 480 || height <= 1280
-        if (isSmallScreen) {
-            binding.ivDoctor.visibility = View.GONE
-            binding.ivalarm.visibility = View.GONE
-            binding.ivExercise.visibility = View.GONE
-            binding.space1.visibility = View.GONE
-            binding.space2.visibility = View.GONE
-            binding.space3.visibility = View.GONE
-        }
+//        if (isSmallScreen) {
+//            binding.imageView.visibility = View.GONE
+//            binding.imageView2.visibility = View.GONE
+//            binding.imageView3.visibility = View.GONE
+//        }
+        binding.tvUsername.text = "Hey, "+Userinfo.uname + "!"
         binding.btnAppointments.setOnClickListener {
             val direction = HomeFragmentDirections.actionHomeFragmentToBookappointmentFragment()
             view?.findNavController()?.navigate(direction)

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="wrap_content"
+    tools:context=".VitalsFragment">
+    <LinearLayout
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="10dp"
+        android:padding="10dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/diseases_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Diseases"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/diseases_value_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter diseases"
+            android:textSize="18sp" />
+
+        <!-- Height -->
+        <TextView
+            android:textStyle="bold"
+            android:id="@+id/height_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Height (cm)"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/height_value_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter height"
+            android:textSize="18sp" />
+
+        <!-- Weight -->
+        <TextView
+            android:textStyle="bold"
+            android:id="@+id/weight_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Weight (kg)"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/weight_value_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter weight"
+            android:textSize="18sp" />
+
+        <!-- Blood group -->
+        <TextView
+            android:textStyle="bold"
+            android:id="@+id/blood_group_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Blood Group"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/blood_group_value_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter blood group"
+            android:textSize="18sp" />
+
+        <!-- Birthmark -->
+        <TextView
+            android:textStyle="bold"
+            android:id="@+id/birthmark_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Birthmark"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/birthmark_value_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter birthmark"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+</ScrollView>

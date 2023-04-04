@@ -1,22 +1,26 @@
 package com.shubhasai.wellnation
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.ktx.Firebase
+import com.shubhasai.wellnation.databinding.FragmentHospitalsBinding
 
-class HospitalsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
+class HospitalsFragment : Fragment(),HospitalAdapter.HospitalClicked{
+    private lateinit var binding: FragmentHospitalsBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
     }
 
     override fun onCreateView(
@@ -24,26 +28,31 @@ class HospitalsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_hospitals, container, false)
+        binding = FragmentHospitalsBinding.inflate(layoutInflater)
+        val hospitalList:ArrayList<HospitalList> = ArrayList()
+        binding.hospitalList.layoutManager = LinearLayoutManager(activity)
+        val db = Firebase.firestore
+        val collectionRef = db.collection("users")
+        collectionRef.get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    val hospital = document.toObject(HospitalList::class.java)
+                    hospitalList.add(hospital)
+                }
+                Log.d("Firebase", "Hospitals documents: ${hospitalList.size}")
+                binding.hospitalList.adapter = HospitalAdapter(activity as Context?,hospitalList,this)
+            }
+            .addOnFailureListener { exception ->
+                Log.d("Firebase", "Error getting Hospitals documents: ", exception)
+            }
+        return binding.root
+
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HospitalsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HospitalsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onHospitalClicked(hospital: HospitalList) {
+        Userinfo.hospitalclicked = hospital.uid
+        val direction = HospitalsFragmentDirections.actionHospitalsFragmentToHospitaldetailsFragment(hospital.uid)
+        findNavController().navigate(direction)
+
     }
 }

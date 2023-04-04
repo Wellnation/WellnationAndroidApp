@@ -53,21 +53,13 @@ class SignupActivity : AppCompatActivity() {
             firebaseregister!!.createUserWithEmailAndPassword(email,password)
                 .addOnCompleteListener{ task->
                     if(task.isSuccessful){
-                        val userdata =
-                            phone?.let {
-                                userdetails(firebaseregister!!.uid.toString(),name,email,
-                                    it
-                                )
-                            }
+                        val userdata = phone?.let {
+                            userdetails(Userinfo.userid,name,email, it)
+                        }
                         val firebasedatabase = Firebase.firestore.collection("publicusers")
                         if (userdata != null) {
-                            val user = hashMapOf(
-                                "name" to userdata.name,
-                                "userid" to userdata.userid,
-                                "email" to userdata.email,
-                                "phone" to userdata.phonenumber
-                            )
-                            firebasedatabase.document(userdata.userid).set(user).addOnCompleteListener {
+                            val userdetails = userdetails(firebaseregister!!.uid.toString(),name,email,phone)
+                            firebasedatabase.document(userdata.userid).set(userdetails).addOnCompleteListener {
                                 checkemail()
                             }
                         }
@@ -75,7 +67,7 @@ class SignupActivity : AppCompatActivity() {
                         Toast.makeText(this,email.toString()+password.toString(), Toast.LENGTH_SHORT).show()
                         Log.e("SG","RG error:"+(task.exception!!.message))
                     }
-                }L
+                }
         }
     }
     private fun checkemail(){
