@@ -25,8 +25,8 @@
 
             <ImageView
                 android:id="@+id/hospital_image"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_margin="10dp"
                 android:src="@drawable/hospital" />
 

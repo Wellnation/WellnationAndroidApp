@@ -13,4 +13,7 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="password">Password</string>
     <string name="phone_number">Phone Number</string>
+    <string name="appwidget_text">Emergency</string>
+    <string name="add_widget">Add widget</string>
+    <string name="app_widget_description">This is the Emergency App Widget of Well Nation</string>
 </resources>

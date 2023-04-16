@@ -11,7 +11,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.shubhasai.wellnation.databinding.ActivitySignupBinding
 
-class SignupActivity : AppCompatActivity() {
+class  SignupActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignupBinding
     private var firebaseregister: FirebaseAuth?=null
     private var uemail:String?=null

@@ -18,10 +18,10 @@ class ProfilepagerAdapter(
                 ProfileeditFragment()
             }
             1->{
-                VitalsFragment()
+                MedicineFragment()
             }
             2->{
-                MedicineFragment()
+                AppointmentFragment()
             }
             else->{
                 Fragment()

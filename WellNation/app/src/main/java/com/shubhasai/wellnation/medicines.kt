@@ -10,6 +10,6 @@ data class medicines(
 )
 
 data class time(
-    var hr:Int = 0,
-    var min:Int = 0,
+    var hr:String = "0",
+    var min:String = "0",
 )

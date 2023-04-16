@@ -72,4 +72,9 @@ dependencies {
 
     //lottie Animation
     implementation 'com.airbnb.android:lottie:5.2.0'
+
+    // Location Service
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
+    implementation 'com.github.BirjuVachhani:locus-android:3.0.1'
+
 }

@@ -1,32 +1,22 @@
 package com.shubhasai.wellnation
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import com.shubhasai.wellnation.databinding.FragmentMedicineBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [MedicineFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class MedicineFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
+    private lateinit var binding:FragmentMedicineBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
     }
 
     override fun onCreateView(
@@ -34,26 +24,32 @@ class MedicineFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_medicine, container, false)
+        binding = FragmentMedicineBinding.inflate(layoutInflater)
+        getmedicinedata()
+        return binding.root
     }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment MedicineFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MedicineFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    fun getmedicinedata(){
+        if(Userinfo.userid != ""){
+            binding.rvMedicine.layoutManager = LinearLayoutManager(activity)
+            val medicinelist:ArrayList<medicines> = ArrayList()
+            val db = Firebase.firestore
+            val collectionRef = db.collection("appointments")
+            collectionRef.get()
+                .addOnSuccessListener { documents ->
+                    for (document in documents) {
+                        val appointment = document.toObject(AppointmentData::class.java)
+                        if (appointment.pid == Userinfo.userid){
+                            for (medicine in appointment.medicine){
+                                medicinelist.add(medicine)
+                            }
+                        }
+                    }
+                    binding.rvMedicine.adapter = MedicinesAdapter(activity as Context?,medicinelist)
                 }
-            }
+                .addOnFailureListener { exception ->
+                    Log.d("Firebase", "Error getting Hospitals documents: ", exception)
+                }
+        }
+
     }
 }

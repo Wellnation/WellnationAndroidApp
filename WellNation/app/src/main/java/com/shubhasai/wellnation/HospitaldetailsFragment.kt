@@ -33,14 +33,14 @@ class HospitaldetailsFragment : Fragment() {
                     tab.text="Tests"
                 }
                 2->{
-                    tab.text="Doctors"
-                }
-                3->{
                     tab.text="Bloodbank"
                 }
-                4->{
+                3->{
                     tab.text="Rooms"
                 }
+//                4->{
+//                    tab.text="Doctors"
+//                }
             }
         }.attach()
         gethospitaldetails()
@@ -62,4 +62,5 @@ class HospitaldetailsFragment : Fragment() {
             }
         }
     }
+
 }

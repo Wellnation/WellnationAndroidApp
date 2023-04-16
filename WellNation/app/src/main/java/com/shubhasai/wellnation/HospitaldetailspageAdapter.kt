@@ -8,7 +8,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 class HospitaldetailspageAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle
 ): FragmentStateAdapter(fragmentManager, lifecycle) {
     override fun getItemCount(): Int {
-        return 5
+        return 4
     }
 
     override fun createFragment(position: Int): Fragment {
@@ -16,16 +16,16 @@ class HospitaldetailspageAdapter(fragmentManager: FragmentManager, lifecycle: Li
             0->{
                 DepartmentFragment()
             }
-            1->{
-                ServicesavailableFragment()
-            }
+//            1->{
+//                // ServicesavailableFragment()
+//            }
+//            4->{
+//                DoctorsFragment()
+//            }
             2->{
-                DoctorsFragment()
-            }
-            3->{
                 BloodbankFragment()
             }
-            4->{
+            3->{
                 RoomsFragment()
             }
             else->{

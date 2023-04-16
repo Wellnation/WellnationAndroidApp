@@ -61,6 +61,8 @@ class DepartmentFragment : Fragment(),DepartmentAdapter.DeptClicked{
 
     override fun onbooknowclicked(dept: DepartmentData) {
         Toast.makeText(activity,"Book Now Clicked",Toast.LENGTH_SHORT).show()
+        val directions = HospitaldetailsFragmentDirections.actionHospitaldetailsFragmentToBookappointmentFragment(Userinfo.hospitalclicked,"")
+        findNavController().navigate(directions)
     }
     fun getdoctorsdata(dept: DepartmentData){
         val doctordata: ArrayList<DoctorInfo> = ArrayList()
@@ -101,4 +103,5 @@ class DepartmentFragment : Fragment(),DepartmentAdapter.DeptClicked{
         builder?.setContentView(dialogLayout)
         builder?.show()
     }
+
 }

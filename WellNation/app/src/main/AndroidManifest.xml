@@ -2,8 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.PREVENT_POWER_KEY" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -15,11 +19,29 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WellNation"
         tools:targetApi="31">
+        <receiver
+            android:name=".EmergencyWidget"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/wellnation_emergency_widget_info" />
+        </receiver>
+
+        <activity
+            android:name=".EmergencyActivity"
+            android:excludeFromRecents="true"
+            android:noHistory="true"
+            android:theme="@style/Theme.WellNation"/>
         <activity
             android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
@@ -44,10 +66,11 @@
         <activity
             android:name=".OnboardingActivity"
             android:exported="true">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -59,18 +82,6 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <receiver android:name=".PowerbuttonBroadcastReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.SCREEN_OFF" />
-            </intent-filter>
-        </receiver>
-        <receiver android:name=".VolumeButtonToastReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.shubhasai.wellnation.VOLUME_BUTTON_TOAST" />
-            </intent-filter>
-        </receiver>
     </application>
 
 </manifest>

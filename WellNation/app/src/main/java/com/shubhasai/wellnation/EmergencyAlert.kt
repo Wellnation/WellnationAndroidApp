@@ -1,15 +1,11 @@
 package com.shubhasai.wellnation
 
+import com.google.firebase.Timestamp
+import com.google.firebase.firestore.GeoPoint
+
 data class EmergencyAlert(
-    val userid: String = "",
-    val latitute: String = "",
-    val longitude: String = "",
-    val time: String = "",
-    val date: String = "",
-    val status: String = "",
-    val emergencyNumber: String = "",
-    val address: String = "",
-    val name: String = "",
-    val phone: String = "",
-    val splashActivity: SplashActivity = SplashActivity(),
+   val date:Timestamp = Timestamp.now(),
+   val location:GeoPoint = GeoPoint(0.00,0.00),
+   val pid:String = "",
+   val text:String = "Help Needed"
 )

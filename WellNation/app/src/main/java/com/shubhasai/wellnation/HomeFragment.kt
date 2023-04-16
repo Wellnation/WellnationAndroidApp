@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.shubhasai.wellnation.databinding.FragmentHomeBinding
 
 
@@ -40,8 +41,8 @@ class HomeFragment : Fragment() {
 //        }
         binding.tvUsername.text = "Hey, "+Userinfo.uname + "!"
         binding.btnAppointments.setOnClickListener {
-            val direction = HomeFragmentDirections.actionHomeFragmentToBookappointmentFragment()
-            view?.findNavController()?.navigate(direction)
+            val directions = HomeFragmentDirections.actionHomeFragmentToAppointmentFragment()
+            findNavController().navigate(directions)
         }
         binding.btnHospitals.setOnClickListener {
             val direction = HomeFragmentDirections.actionHomeFragmentToHospitalsFragment()

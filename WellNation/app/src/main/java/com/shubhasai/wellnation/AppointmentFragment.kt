@@ -8,16 +8,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.shubhasai.wellnation.databinding.FragmentServicesavailableBinding
+import com.shubhasai.wellnation.databinding.FragmentAppointmentBinding
+import com.shubhasai.wellnation.databinding.FragmentDepartmentBinding
+import com.shubhasai.wellnation.databinding.FragmentMedicineBinding
 
-class ServicesavailableFragment : Fragment() {
-    private lateinit var binding: FragmentServicesavailableBinding
-    val testlist:ArrayList<tests> = ArrayList()
+
+class AppointmentFragment : Fragment(),AppointmentAdapter.ApptClicked {
+    private lateinit var binding: FragmentAppointmentBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
     }
 
     override fun onCreateView(
@@ -25,27 +27,31 @@ class ServicesavailableFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentServicesavailableBinding.inflate(layoutInflater)
-        getavailabletests()
+        binding = FragmentAppointmentBinding.inflate(layoutInflater)
+        getmyappointment()
         return binding.root
     }
-    fun getavailabletests(){
-        binding.rvhospitaltests.layoutManager = LinearLayoutManager(activity)
+    fun getmyappointment(){
+        binding.rvMyappointments.layoutManager = LinearLayoutManager(activity)
         val db = Firebase.firestore
-        val collectionRef = db.collection("tests")
+        val appotlists : ArrayList<AppointmentData> =  ArrayList()
+        val collectionRef = db.collection("appointments")
         collectionRef.get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
-                    val tests = document.toObject(tests::class.java)
-                    if(tests.hid == Userinfo.hospitalclicked){
-                        testlist.add(tests)
+                    val appointment = document.toObject(AppointmentData::class.java)
+                    if (appointment.pid == Userinfo.userid){
+                        appotlists.add(appointment)
                     }
                 }
-                binding.rvhospitaltests.adapter = TestAdapter(activity,testlist)
+                binding.rvMyappointments.adapter = AppointmentAdapter(activity as Context?,appotlists,this)
             }
             .addOnFailureListener { exception ->
                 Log.d("Firebase", "Error getting Hospitals documents: ", exception)
             }
     }
 
+    override fun onviewmoreclicked(appt: AppointmentData) {
+
+    }
 }

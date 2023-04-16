@@ -51,7 +51,6 @@ class SplashActivity : AppCompatActivity() {
                     Userinfo.email = user?.email.toString()
                     Userinfo.uname = user?.name.toString()
                     Userinfo.phonenumber = user?.phone.toString()
-                    startActivity(Intent(this,MainActivity::class.java))
                 } else {
                     Log.d("Firebase Execption", "No such document")
                 }

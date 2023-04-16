@@ -14,9 +14,6 @@
             android:id="@+id/action_homeFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_bookappointmentFragment"
-            app:destination="@id/bookappointmentFragment" />
-        <action
             android:id="@+id/action_homeFragment_to_healthpassportFragment"
             app:destination="@id/healthpassportFragment" />
         <action
@@ -34,6 +31,18 @@
         <action
             android:id="@+id/action_homeFragment_to_helpFragment"
             app:destination="@id/helpFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_appointmentbookingFragment"
+            app:destination="@id/appointmentbookingFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_testbookingFragment"
+            app:destination="@id/testbookingFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_appointmentFragment"
+            app:destination="@id/appointmentFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_testFragment"
+            app:destination="@id/testFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -44,7 +53,15 @@
         android:id="@+id/bookappointmentFragment"
         android:name="com.shubhasai.wellnation.BookappointmentFragment"
         android:label="fragment_bookappointment"
-        tools:layout="@layout/fragment_bookappointment" />
+        tools:layout="@layout/fragment_bookappointment" >
+        <argument
+            android:name="hospitalid"
+            app:argType="string" />
+        <argument
+            android:name="doctorid"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
     <fragment
         android:id="@+id/healthpassportFragment"
         android:name="com.shubhasai.wellnation.HealthpassportFragment"
@@ -87,5 +104,28 @@
         <argument
             android:name="hospitaid"
             app:argType="string" />
+        <action
+            android:id="@+id/action_hospitaldetailsFragment_to_bookappointmentFragment"
+            app:destination="@id/bookappointmentFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/appointmentFragment"
+        android:name="com.shubhasai.wellnation.AppointmentFragment"
+        android:label="fragment_appointment"
+        tools:layout="@layout/fragment_appointment" />
+    <fragment
+        android:id="@+id/testFragment"
+        android:name="com.shubhasai.wellnation.TestFragment"
+        android:label="fragment_test"
+        tools:layout="@layout/fragment_test" />
+    <fragment
+        android:id="@+id/appointmentbookingFragment"
+        android:name="com.shubhasai.wellnation.AppointmentbookingFragment"
+        android:label="fragment_appointmentbooking"
+        tools:layout="@layout/fragment_appointmentbooking" />
+    <fragment
+        android:id="@+id/testbookingFragment"
+        android:name="com.shubhasai.wellnation.TestbookingFragment"
+        android:label="fragment_testbooking"
+        tools:layout="@layout/fragment_testbooking" />
 </navigation>
