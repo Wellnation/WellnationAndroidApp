@@ -23,6 +23,7 @@ class SplashActivity : AppCompatActivity() {
         var curuser : FirebaseUser? = firebaseauth?.currentUser
         if (curuser!=null){
             curuser.uid
+
             getuserdetails(curuser.uid)
         }
         Handler().postDelayed({

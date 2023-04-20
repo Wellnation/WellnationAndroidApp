@@ -58,31 +58,36 @@ class ProfileFragment : Fragment() {
         val firestore = FirebaseFirestore.getInstance()
 
         val userDetailsCollectionRef = firestore.collection("publicusers")
-
-        userDetailsCollectionRef.document(Userinfo.userid).get().addOnSuccessListener { document ->
-            if (document.exists()) {
-                val userdata = document.toObject<userdetails>()
-                binding.userName.text = userdata?.name
-                binding.userAddress.text = userdata?.address?.state+", "+userdata?.address?.district+", "+userdata?.address?.locality+", "+userdata?.address?.pincode
-                binding.userContactNumber.text = "Mobile: "+userdata?.phone
-                binding.userEmergencyContact.text = "Emergency Contact: "+userdata?.emergencyNumber
-                binding.userEmail.text = userdata?.email
-                if (userdata?.gender=="male"){
-                    binding.profileIcon.setAnimation(R.raw.maleicon)
-                    binding.profileIcon.playAnimation()
+        firebaseauth = FirebaseAuth.getInstance()
+        var curuser : FirebaseUser? = firebaseauth?.currentUser
+        if (curuser!=null){
+            Userinfo.userid = curuser.uid
+            userDetailsCollectionRef.document(Userinfo.userid).get().addOnSuccessListener { document ->
+                if (document.exists()) {
+                    val userdata = document.toObject<userdetails>()
+                    binding.userName.text = userdata?.name
+                    binding.userAddress.text = userdata?.address?.state+", "+userdata?.address?.district+", "+userdata?.address?.locality+", "+userdata?.address?.pincode
+                    binding.userContactNumber.text = "Mobile: "+userdata?.phone
+                    binding.userEmergencyContact.text = "Emergency Contact: "+userdata?.emergencyNumber
+                    binding.userEmail.text = userdata?.email
+                    if (userdata?.gender=="male"){
+                        binding.profileIcon.setAnimation(R.raw.maleicon)
+                        binding.profileIcon.playAnimation()
+                    }
+                    else if (userdata?.gender == "female"){
+                        binding.profileIcon.setAnimation(R.raw.femaleicon)
+                        binding.profileIcon.playAnimation()
+                    }
+                    else{
+                        binding.profileIcon.setAnimation(R.raw.profileicon)
+                        binding.profileIcon.playAnimation()
+                    }
                 }
-                else if (userdata?.gender == "female"){
-                    binding.profileIcon.setAnimation(R.raw.femaleicon)
-                    binding.profileIcon.playAnimation()
-                }
-                else{
-                    binding.profileIcon.setAnimation(R.raw.profileicon)
-                    binding.profileIcon.playAnimation()
-                }
+            }.addOnFailureListener { exception ->
+                Log.w("Firebase Execption", "Error getting user details", exception)
             }
-        }.addOnFailureListener { exception ->
-            Log.w("Firebase Execption", "Error getting user details", exception)
         }
+
 
     }
 }
