@@ -8,8 +8,9 @@
     tools:context=".BooktestsFragment">
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_margin="10dp"
-        android:id="@+id/rv_alltests"
+        android:layout_marginHorizontal="10dp"
+        android:id="@+id/rvtests"
+        android:layout_marginTop="10dp"
         android:layout_height="wrap_content"/>
 
 </LinearLayout>

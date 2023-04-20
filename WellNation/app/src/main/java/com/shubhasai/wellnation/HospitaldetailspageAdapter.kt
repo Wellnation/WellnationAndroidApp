@@ -16,12 +16,9 @@ class HospitaldetailspageAdapter(fragmentManager: FragmentManager, lifecycle: Li
             0->{
                 DepartmentFragment()
             }
-//            1->{
-//                // ServicesavailableFragment()
-//            }
-//            4->{
-//                DoctorsFragment()
-//            }
+            1->{
+                 ServicesavailableFragment()
+            }
             2->{
                 BloodbankFragment()
             }

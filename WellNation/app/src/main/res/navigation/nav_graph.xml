@@ -43,6 +43,9 @@
         <action
             android:id="@+id/action_homeFragment_to_testFragment"
             app:destination="@id/testFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_servicesavailableFragment"
+            app:destination="@id/servicesavailableFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -128,4 +131,9 @@
         android:name="com.shubhasai.wellnation.TestbookingFragment"
         android:label="fragment_testbooking"
         tools:layout="@layout/fragment_testbooking" />
+    <fragment
+        android:id="@+id/servicesavailableFragment"
+        android:name="com.shubhasai.wellnation.ServicesavailableFragment"
+        android:label="fragment_servicesavailable"
+        tools:layout="@layout/fragment_servicesavailable" />
 </navigation>

@@ -1,5 +1,6 @@
 package com.shubhasai.wellnation
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -7,16 +8,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.shubhasai.wellnation.databinding.FragmentBooktestsBinding
+import com.shubhasai.wellnation.databinding.FragmentServicesavailableBinding
 
-class BooktestsFragment : Fragment(),TestAdapter.TestClicked {
-    private lateinit var binding:FragmentBooktestsBinding
+class ServicesavailableFragment : Fragment(),TestAdapter.TestClicked {
+    private lateinit var binding: FragmentServicesavailableBinding
     val testlist:ArrayList<tests> = ArrayList()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -24,12 +25,12 @@ class BooktestsFragment : Fragment(),TestAdapter.TestClicked {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentBooktestsBinding.inflate(layoutInflater)
+        binding = FragmentServicesavailableBinding.inflate(layoutInflater)
         getavailabletests()
         return binding.root
     }
     fun getavailabletests(){
-        binding.rvtests.layoutManager = LinearLayoutManager(activity)
+        binding.rvhospitaltests.layoutManager = LinearLayoutManager(activity)
         val db = Firebase.firestore
         val collectionRef = db.collection("tests")
         collectionRef.get()
@@ -38,10 +39,11 @@ class BooktestsFragment : Fragment(),TestAdapter.TestClicked {
                     val tests = document.toObject(tests::class.java)
                     testlist.add(tests)
                 }
-                binding.rvtests.adapter = TestAdapter(activity,testlist,this)
+                binding.rvhospitaltests.adapter = TestAdapter(activity,testlist,this)
             }
             .addOnFailureListener { exception ->
                 Log.d("Firebase", "Error getting Hospitals documents: ", exception)
             }
     }
+
 }

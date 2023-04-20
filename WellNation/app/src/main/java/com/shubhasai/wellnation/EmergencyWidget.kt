@@ -21,7 +21,7 @@ class EmergencyWidget : AppWidgetProvider() {
         for (appWidgetId in appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId)
             val intent = Intent(context, EmergencyActivity::class.java)
-            val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
+            val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
             // Set the click listener on the widget
             widgetViews.setOnClickPendingIntent(R.id.btn_sendalert, pendingIntent)
