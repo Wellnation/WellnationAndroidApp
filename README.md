@@ -30,7 +30,7 @@ We have created a Health Passport for our Every Users. In user's passport sectio
 There are 1000+ Exercises those are available in our app with all their benifits, Procedures and Video Tutorials.
 
 ### Campaign
-From our app Users can also check all the running Social Wellfare campaigns by different Hospitals and can contribute to the Society i a better way.
+From our app Users can also check all the running Social Wellfare campaigns by different Hospitals and can contribute to the Society in a better way.
 
 # Installation
 To use the Wellnation app, users can download and install the app from Here:
