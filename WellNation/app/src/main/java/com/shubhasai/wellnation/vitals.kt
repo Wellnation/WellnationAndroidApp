@@ -10,8 +10,7 @@ data class vitals(
 
 }
 data class disease(
-    var nameofdisease:String = "",
-    var description:String = "",
+    var nameofdisease:String = ""
 ) {
 
 }

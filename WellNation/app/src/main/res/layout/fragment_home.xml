@@ -52,6 +52,7 @@
                     <RelativeLayout
                         android:background="?attr/colorSecondary"
                         android:layout_gravity="center"
+                        android:id="@+id/EmergencyContact"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
@@ -61,7 +62,7 @@
                             android:layout_width="80dp"
                             android:layout_height="80dp"
                             android:id="@+id/imageView"
-                            android:src="@drawable/alarm"
+                            android:src="@drawable/emergencycall"
                             android:scaleType="centerCrop" />
 
                         <TextView
@@ -72,7 +73,7 @@
                             android:layout_marginTop="20dp"
                             android:gravity="center"
                             android:padding="8dp"
-                            android:text="Reminder"
+                            android:text="Emergency"
                             android:textSize="16dp"
                             android:textStyle="bold" />
 
@@ -90,6 +91,7 @@
                     <RelativeLayout
                         android:background="?attr/colorSecondary"
                         android:layout_width="match_parent"
+                        android:id="@+id/Ambulance"
                         android:layout_height="match_parent">
 
                         <ImageView
@@ -99,7 +101,7 @@
                             android:layout_height="80dp"
                             android:layout_centerHorizontal="true"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/doctorpng" />
+                            android:src="@drawable/ambulance" />
 
                         <TextView
                             android:layout_marginTop="20dp"
@@ -112,7 +114,7 @@
                             android:padding="8dp"
                             android:textStyle="bold"
                             android:textSize="15dp"
-                            android:text="Appointments" />
+                            android:text="Ambulance" />
 
                     </RelativeLayout>
 
@@ -128,6 +130,7 @@
                     <RelativeLayout
                         android:background="?attr/colorSecondary"
                         android:layout_width="match_parent"
+                        android:id="@+id/Exercise"
                         android:layout_height="match_parent">
 
                         <ImageView

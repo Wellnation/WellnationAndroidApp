@@ -5,28 +5,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.google.firebase.firestore.FirebaseFirestore
+import com.shubhasai.wellnation.databinding.FragmentBlogBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [BlogFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class BlogFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
+class BlogFragment : Fragment(),BlogAdapter.BlogClicked {
+    private lateinit var binding: FragmentBlogBinding
+    private val blogs = ArrayList<blogdata>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
     }
 
     override fun onCreateView(
@@ -34,26 +24,27 @@ class BlogFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_blog, container, false)
-    }
+        binding = FragmentBlogBinding.inflate(inflater, container, false)
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment BlogFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            BlogFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+        getblogs()
+        return binding.root
+    }
+    fun getblogs(){
+        val db = FirebaseFirestore.getInstance().collection("blogs")
+        db.get().addOnSuccessListener {
+            for (document in it.documents){
+                val blog = document.toObject(blogdata::class.java)
+                if (blog != null) {
+                    blogs.add(blog)
                 }
             }
+            binding.blogRecyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+            binding.blogRecyclerView.adapter = BlogAdapter(activity, blogs,this)
+        }
+    }
+
+    override fun onBlogClicked(blog: blogdata) {
+        val directions = BlogFragmentDirections.actionBlogFragmentToBlogdetailsFragment(blog.blogid)
+        view?.findNavController()?.navigate(directions)
     }
 }

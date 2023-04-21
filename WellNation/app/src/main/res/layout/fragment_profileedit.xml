@@ -249,37 +249,6 @@
                 </com.google.android.material.textfield.TextInputLayout>
             </TableRow>
         </TableLayout>
-        <TextView
-            android:layout_width="wrap_content"
-            android:padding="10dp"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:text="Diseases"
-            android:layout_marginHorizontal="20dp"
-            android:layout_height="wrap_content"/>
-        <LinearLayout
-            android:layout_marginBottom="10dp"
-            android:layout_marginHorizontal="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <com.google.android.material.textview.MaterialTextView
-                android:textSize="14sp"
-                android:padding="5dp"
-                android:layout_weight="2"
-                android:layout_marginBottom="10dp"
-                android:maxLines="3"
-                android:text="NONE"
-                android:gravity="start|bottom"
-                android:textAllCaps="true"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"/>
-            <Button
-                android:layout_marginHorizontal="10dp"
-                android:layout_width="0dp"
-                android:text="Add Diseases Details"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
         <Button
             android:layout_marginVertical="20dp"
             android:padding="10dp"

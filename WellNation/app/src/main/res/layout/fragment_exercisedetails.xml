@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ExercisedetailsFragment">
+
+    <LinearLayout
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:id="@+id/tvExerciseName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Exercise Name:"/>
+
+        <TextView
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:id="@+id/tvAka"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Aka:"/>
+
+        <TextView
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:id="@+id/tvCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Category:"/>
+
+        <TextView
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:id="@+id/tvDifficulty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Difficulty:"/>
+
+        <TextView
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:id="@+id/tvForce"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Force:"/>
+
+        <TextView
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:id="@+id/tvGrips"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Grips:"/>
+
+        <TextView
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:id="@+id/tvSteps"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Steps:"/>
+
+        <TextView
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:id="@+id/tvTarget"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Target:"/>
+
+        <TextView
+            android:autoLink="all"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:textColorLink="@color/Navy_Blue"
+            android:id="@+id/tvVideoURL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Video URL:"/>
+
+        <TextView
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:autoLink="all"
+            android:id="@+id/tvYoutubeURL"
+            android:textColorLink="@color/Navy_Blue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Youtube URL:"/>
+
+        <TextView
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Details:"/>
+        <TextView
+            android:textSize="12sp"
+            android:id="@+id/tvDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Details:"/>
+
+
+    </LinearLayout>
+
+
+</ScrollView>

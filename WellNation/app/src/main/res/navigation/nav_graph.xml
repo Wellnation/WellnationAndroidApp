@@ -46,6 +46,12 @@
         <action
             android:id="@+id/action_homeFragment_to_servicesavailableFragment"
             app:destination="@id/servicesavailableFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_ambulanceFragment"
+            app:destination="@id/ambulanceFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_exerciseFragment"
+            app:destination="@id/exerciseFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -74,7 +80,11 @@
         android:id="@+id/blogFragment"
         android:name="com.shubhasai.wellnation.BlogFragment"
         android:label="fragment_blog"
-        tools:layout="@layout/fragment_blog" />
+        tools:layout="@layout/fragment_blog" >
+        <action
+            android:id="@+id/action_blogFragment_to_blogdetailsFragment"
+            app:destination="@id/blogdetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/booktestsFragment"
         android:name="com.shubhasai.wellnation.BooktestsFragment"
@@ -136,4 +146,41 @@
         android:name="com.shubhasai.wellnation.ServicesavailableFragment"
         android:label="fragment_servicesavailable"
         tools:layout="@layout/fragment_servicesavailable" />
+    <fragment
+        android:id="@+id/blogdetailsFragment"
+        android:name="com.shubhasai.wellnation.BlogdetailsFragment"
+        android:label="fragment_blogdetails"
+        tools:layout="@layout/fragment_blogdetails" >
+        <argument
+            android:name="blogid"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/ambulanceFragment"
+        android:name="com.shubhasai.wellnation.AmbulanceFragment"
+        android:label="fragment_ambulance"
+        tools:layout="@layout/fragment_ambulance" />
+    <fragment
+        android:id="@+id/exerciseFragment"
+        android:name="com.shubhasai.wellnation.ExerciseFragment"
+        android:label="fragment_exercise"
+        tools:layout="@layout/fragment_exercise" >
+        <action
+            android:id="@+id/action_exerciseFragment_to_exercisedetailsFragment"
+            app:destination="@id/exercisedetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/exercisedetailsFragment"
+        android:name="com.shubhasai.wellnation.ExercisedetailsFragment"
+        android:label="fragment_exercisedetails"
+        tools:layout="@layout/fragment_exercisedetails" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/campaignFragment"
+        android:name="com.shubhasai.wellnation.CampaignFragment"
+        android:label="fragment_campaign"
+        tools:layout="@layout/fragment_campaign" />
 </navigation>

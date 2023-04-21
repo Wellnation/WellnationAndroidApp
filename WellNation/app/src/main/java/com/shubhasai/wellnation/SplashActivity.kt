@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -52,6 +53,7 @@ class SplashActivity : AppCompatActivity() {
                     Userinfo.email = user?.email.toString()
                     Userinfo.uname = user?.name.toString()
                     Userinfo.phonenumber = user?.phone.toString()
+                    Userinfo.emergencyphonenumber =user?.emergencyNumber.toString()
                 } else {
                     Log.d("Firebase Execption", "No such document")
                 }

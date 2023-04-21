@@ -15,5 +15,56 @@
     <string name="phone_number">Phone Number</string>
     <string name="appwidget_text">Emergency</string>
     <string name="add_widget">Add widget</string>
+    <string-array name="radius_options">
+        <item>1 km</item>
+        <item>5 km</item>
+        <item>10 km</item>
+        <item>20 km</item>
+    </string-array>
+    <string-array name="filter_option">
+        <item>By Category</item>
+        <item>By Difficulty</item>
+        <item>By Forces</item>
+    </string-array>
+    <string-array name="exercise_categories">
+        <item>Barbell</item>
+        <item>Dumbbells</item>
+        <item>Kettlebells</item>
+        <item>Stretches</item>
+        <item>Cables</item>
+        <item>Band</item>
+        <item>Plate</item>
+        <item>TRX</item>
+        <item>Bodyweight</item>
+        <item>Yoga</item>
+        <item>Machine</item>
+    </string-array>
+    <string-array name="exercise_difficulties">
+        <item>Beginner</item>
+        <item>Intermediate</item>
+        <item>Advanced</item>
+    </string-array>
+    <string-array name="exercise_forces">
+        <item>Pull</item>
+        <item>Push</item>
+        <item>Hold</item>
+    </string-array>
+    <string-array name="exercise_muscles">
+        <item>Biceps</item>
+        <item>Forearms</item>
+        <item>Shoulders</item>
+        <item>Triceps</item>
+        <item>Quads</item>
+        <item>Glutes</item>
+        <item>Lats</item>
+        <item>Mid back</item>
+        <item>Lower back</item>
+        <item>Hamstrings</item>
+        <item>Chest</item>
+        <item>Abdominals</item>
+        <item>Obliques</item>
+        <item>Traps</item>
+        <item>Calves</item>
+    </string-array>
     <string name="app_widget_description">This is the Emergency App Widget of Well Nation</string>
 </resources>

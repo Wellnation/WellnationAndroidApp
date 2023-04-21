@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view_exercise"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/image_view"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/exercise" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="16dp">
+
+            <TextView
+                android:id="@+id/tvExerciseName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Exercise Name"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tvCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Category"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tvDifficulty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Difficulty"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tvForce"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Force"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tvGrip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Grip"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
