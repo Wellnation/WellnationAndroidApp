@@ -41,6 +41,18 @@ You can Login / Create account to Continue
 # Compatibility
 The Wellnation app requires an Android device running Android 6.0 (Marshmallow) or higher. The app is optimized for smartphones but can also be used on tablets.
 
+# Screenshots
+<div style="display:flex; justify-content:center;">
+    <img src="https://user-images.githubusercontent.com/78340623/233781465-ca81df28-c2f0-4bfa-860e-dd0737889492.png" width="150">
+    <img src="https://user-images.githubusercontent.com/78340623/233781472-91e6cca8-4f2a-4b4d-ac7c-da2ad1dc3739.png" width="150">
+    <img src="https://user-images.githubusercontent.com/78340623/233781474-384f9167-397e-4f14-a075-602a142ef4d6.png" width="150">
+    <img src="https://user-images.githubusercontent.com/78340623/233781482-dd97d59a-1dab-4c80-87da-3b9058359239.png" width="150">
+    <img src="https://user-images.githubusercontent.com/78340623/233781485-6824287f-73c6-4d45-81ba-39638a1c19cf.png" width="150">
+</div>
+
+
+
+
 # Feedback and Support
 If you encounter any issues or have feedback about the app, you can contact the app's support team via the app's feedback feature or email at wellnationhelp@gmail.com . The support team will respond to your queries as soon as possible.
 
