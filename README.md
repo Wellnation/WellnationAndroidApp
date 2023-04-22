@@ -33,8 +33,8 @@ There are 1000+ Exercises those are available in our app with all their benifits
 From our app Users can also check all the running Social Wellfare campaigns by different Hospitals and can contribute to the Society in a better way.
 
 # Installation
-To use the Wellnation app, users can download and install the app from Here:
- [![N|Solid](https://storage.googleapis.com/gweb-uniblog-publish-prod/images/HeroHomepage_2880x1200.max-100x100.jpg)](https://github.com/Wellnation/.github/raw/main/profile/WellNation.apk). 
+To use the Wellnation app, users can download and install the app from Here:<br>
+ [![N|Solid](https://storage.googleapis.com/gweb-uniblog-publish-prod/images/HeroHomepage_2880x1200.max-100x100.jpg)](https://github.com/Wellnation/.github/raw/main/profile/WellNation.apk)<br>
  The app is free to download and use. Users will need to create an account to access the app's features.
 You can Login / Create account to Continue
 
