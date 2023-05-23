@@ -21,7 +21,7 @@ import com.google.firebase.ktx.Firebase
 import com.shubhasai.wellnation.databinding.FragmentDepartmentBinding
 
 
-class DepartmentFragment : Fragment(),DepartmentAdapter.DeptClicked{
+class DepartmentFragment : Fragment(),DepartmentAdapter2.DeptClicked{
     private lateinit var binding: FragmentDepartmentBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +48,7 @@ class DepartmentFragment : Fragment(),DepartmentAdapter.DeptClicked{
                 }
                 val hid:ArrayList<HospitalList> = ArrayList()
                 binding.rvhospitaldepartament.adapter =
-                    DepartmentAdapter(activity as Context?, deptList,hid,this)
+                    DepartmentAdapter2(activity as Context?, deptList,this)
             }
             .addOnFailureListener { exception ->
                 Log.d("Firebase", "Error getting Hospitals documents: ", exception)
@@ -56,11 +56,11 @@ class DepartmentFragment : Fragment(),DepartmentAdapter.DeptClicked{
         return binding.root
     }
 
-    override fun onDeptClicked(dept: DepartmentData,hospitalList: HospitalList) {
+    override fun onDeptClicked(dept: DepartmentData) {
         getdoctorsdata(dept)
     }
 
-    override fun onbooknowclicked(dept: DepartmentData,hids:HospitalList) {
+    override fun onbooknowclicked(dept: DepartmentData) {
         Toast.makeText(activity,"Book Now Clicked",Toast.LENGTH_SHORT).show()
         val directions = HospitaldetailsFragmentDirections.actionHospitaldetailsFragmentToBookappointmentFragment(Userinfo.hospitalclicked,"")
         findNavController().navigate(directions)
