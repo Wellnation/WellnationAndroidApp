@@ -1,0 +1,11 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Background shape -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/Blue_Grotto" /> <!-- Background color of the bubble -->
+            <corners android:topLeftRadius="22dp"
+                android:topRightRadius="22dp"
+                android:bottomRightRadius="22dp" /> <!-- Adjust the radius to control the roundness of the corners -->
+        </shape>
+    </item>
+</layer-list>

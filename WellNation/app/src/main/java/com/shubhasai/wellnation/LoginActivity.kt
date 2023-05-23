@@ -41,6 +41,10 @@ class LoginActivity : AppCompatActivity() {
             firebaseauth?.signInWithEmailAndPassword(email,password)?.addOnCompleteListener{
                 if(it.isSuccessful){
                     Log.d("called","Authentication Successful")
+                    val curuser = firebaseauth!!.uid
+                    if (curuser != null) {
+                        Userinfo.userid = curuser
+                    }
                     varifyemail()
 //                        finish()
                 }

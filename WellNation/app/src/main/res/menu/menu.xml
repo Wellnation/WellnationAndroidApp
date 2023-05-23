@@ -9,4 +9,7 @@
     <item android:icon="@drawable/ic_usericon"
         android:id="@+id/profileFragment"
         android:title="Profile"/>
+    <item android:icon="@drawable/ic_star"
+        android:id="@+id/physiqueFragment"
+        android:title="Physique"/>
 </menu>

@@ -46,8 +46,9 @@ class DepartmentFragment : Fragment(),DepartmentAdapter.DeptClicked{
                     val hospital = document.toObject(DepartmentData::class.java)
                     deptList.add(hospital)
                 }
+                val hid:ArrayList<HospitalList> = ArrayList()
                 binding.rvhospitaldepartament.adapter =
-                    DepartmentAdapter(activity as Context?, deptList, this)
+                    DepartmentAdapter(activity as Context?, deptList,hid,this)
             }
             .addOnFailureListener { exception ->
                 Log.d("Firebase", "Error getting Hospitals documents: ", exception)
@@ -55,11 +56,11 @@ class DepartmentFragment : Fragment(),DepartmentAdapter.DeptClicked{
         return binding.root
     }
 
-    override fun onDeptClicked(dept: DepartmentData) {
+    override fun onDeptClicked(dept: DepartmentData,hospitalList: HospitalList) {
         getdoctorsdata(dept)
     }
 
-    override fun onbooknowclicked(dept: DepartmentData) {
+    override fun onbooknowclicked(dept: DepartmentData,hids:HospitalList) {
         Toast.makeText(activity,"Book Now Clicked",Toast.LENGTH_SHORT).show()
         val directions = HospitaldetailsFragmentDirections.actionHospitaldetailsFragmentToBookappointmentFragment(Userinfo.hospitalclicked,"")
         findNavController().navigate(directions)

@@ -10,18 +10,19 @@
         android:id="@+id/ambulancemapview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:apiKey="AIzaSyByTCobrMtDrYD_1mTesxT2YxPl3l5orDY"
         android:clickable="true"
         android:focusable="true"
+        android:apiKey="AIzaSyAOjr36nWK1pfruFvU8w49Pb_BKZSmWlYk"
         android:enabled="true"
-        android:layout_margin="8dp"
         mapType="normal" />
     <LinearLayout
         android:id="@+id/dropdown_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top|right"
+        android:layout_margin="5dp"
         android:padding="8dp"
+        android:background="@drawable/rectangular_button"
         android:orientation="horizontal">
 
         <TextView
@@ -37,6 +38,7 @@
             android:layout_height="wrap_content"
             android:entries="@array/radius_options"
             android:gravity="center"
+            android:textColor="@color/Baby_Blue"
             android:spinnerMode="dropdown" />
 
     </LinearLayout>

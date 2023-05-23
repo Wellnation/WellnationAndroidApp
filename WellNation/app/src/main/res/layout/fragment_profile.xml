@@ -17,7 +17,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp">
-
+            <Button
+                android:layout_width="wrap_content"
+                android:text="My Family"
+                android:id="@+id/btnMyfamily"
+                android:layout_gravity="end"
+                android:layout_height="wrap_content"/>
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/profile_icon"
                 android:layout_width="100dp"

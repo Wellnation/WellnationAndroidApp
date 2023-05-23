@@ -75,6 +75,13 @@
                         android:textStyle="bold" />
 
                 </LinearLayout>
+                <TextView
+                    android:id="@+id/hname"
+                    android:textStyle="bold"
+                    android:textSize="12sp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
                 <Button
                     android:padding="5dp"
                     android:text="Book"

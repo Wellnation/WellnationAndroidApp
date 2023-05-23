@@ -3,18 +3,19 @@ The Wellnation Android App is designed to help users find hospitals, book appoin
 
 # Features
 The Wellnation app comes with several features that make it a convenient and efficient app for users. The following are some of the app's main features:
+One stop Solution For Your and your family's Health Work
 
 ### Hospital Search
 The hospital search feature allows users to search for hospitals near their location or a specific area. Users can filter their search results by distance, rating, or services provided. Once a hospital is selected, users can view the hospital's details such as address, phone number, website, and reviews. They can also check the Available Doctors, Rooms, Blood Bank Availability and all available tests.
 
 ### Appointment Booking
-The appointment booking feature enables users to book appointments with doctors at their preferred hospital. Users can view the availability of doctors and book appointments based on their schedule. Users can also receive notifications about their upcoming appointments.
+The appointment booking feature enables users to book appointments with doctors at their preferred hospital. Users can view the availability of doctors and book appointments based on their schedule. Users can also receive notifications about their upcoming appointments and Prescribed medicine
 
 ### Test Scheduling
 The test scheduling feature allows users to schedule tests, such as blood tests, X-rays, or CT scans, at their preferred hospital. Users can view the availability of tests and book appointments based on their schedule. Users can also receive notifications about their upcoming tests.
 
 ### Nearby Ambulance
-This App Shows All the Ambulance that are available within the desired radius of user. With a single Click they can call the Ambulance and Ask them to come.
+This App Shows All the Ambulance that are available within the desired radius of user. With a single Click they can call the Ambulance and Ask them to come. User can book ambulance and see the live location of the ambulance
 
 ### Emergency Alert
 From our app the Users Can send Emergency Alerts to our Servers and to there Emergency Contacts.

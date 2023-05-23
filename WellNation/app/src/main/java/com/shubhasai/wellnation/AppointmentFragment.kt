@@ -1,18 +1,28 @@
 package com.shubhasai.wellnation
 
+import android.app.NotificationManager
+import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.shubhasai.wellnation.databinding.FragmentAppointmentBinding
 import com.shubhasai.wellnation.databinding.FragmentDepartmentBinding
 import com.shubhasai.wellnation.databinding.FragmentMedicineBinding
+import de.coldtea.smplr.smplralarm.alarmNotification
+import de.coldtea.smplr.smplralarm.channel
+import de.coldtea.smplr.smplralarm.smplrAlarmSet
 
 
 class AppointmentFragment : Fragment(),AppointmentAdapter.ApptClicked {
@@ -31,6 +41,7 @@ class AppointmentFragment : Fragment(),AppointmentAdapter.ApptClicked {
         getmyappointment()
         return binding.root
     }
+
     fun getmyappointment(){
         binding.rvMyappointments.layoutManager = LinearLayoutManager(activity)
         val db = Firebase.firestore
@@ -52,6 +63,31 @@ class AppointmentFragment : Fragment(),AppointmentAdapter.ApptClicked {
     }
 
     override fun onviewmoreclicked(appt: AppointmentData) {
+        if(appt.status){
+            val directions = AppointmentFragmentDirections.actionAppointmentFragmentToAppointmentdetailsFragment(appt.apptId)
+            findNavController().navigate(directions)
+        }
+        else if(appt.shldtime.toDate().after(Timestamp.now().toDate()) && !appt.onlinemode){
+            Toast.makeText(activity,"UPCOMING",Toast.LENGTH_SHORT).show()
+        }
+        else if(appt.shldtime.toDate().after(Timestamp.now().toDate()) && appt.onlinemode){
+            Toast.makeText(activity,"Meet Code has been sent via Notification",Toast.LENGTH_SHORT).show()
+            val url = "https://wellnation.vercel.app/patients/${Userinfo.userid}/chat" // Replace with your desired URL
 
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(url)
+
+            try {
+                startActivity(intent)
+            } catch (e: ActivityNotFoundException) {
+                // Handle the exception as needed
+            }
+        }
+        else if (appt.shldtime.toDate().before(Timestamp.now().toDate()) && !appt.status){
+            Toast.makeText(activity,"TO BE SCHEDULED",Toast.LENGTH_SHORT).show()
+        }
+        else{
+            Toast.makeText(activity,"MISSED",Toast.LENGTH_SHORT).show()
+        }
     }
 }

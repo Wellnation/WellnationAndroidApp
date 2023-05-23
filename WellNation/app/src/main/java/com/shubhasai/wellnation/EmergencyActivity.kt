@@ -121,7 +121,7 @@ class EmergencyActivity : AppCompatActivity() {
     }
     fun sendalert(location:Location){
         val firebase = Firebase.firestore.collection("emergency")
-        val alert = EmergencyAlert(Timestamp.now(), GeoPoint(location.latitude,location.longitude),Userinfo.userid,"Help Needed")
+        val alert = EmergencyAlert(Timestamp.now(), GeoPoint(location.latitude,location.longitude),Userinfo.userid,"Help Needed","")
         firebase.document().set(alert).addOnSuccessListener {
             Toast.makeText(this,"Alert has Been Sent",Toast.LENGTH_LONG).show()
         }

@@ -17,7 +17,7 @@ class AppointmentAdapter(private val context: Context?, val appointment: ArrayLi
         val apptcardview: CardView = itemView.findViewById(R.id.cardViewappt)
         val hospitaname: TextView = itemView.findViewById(R.id.tv_HospitalName)
         val doctorname: TextView = itemView.findViewById(R.id.tv_doctorname)
-        val remark: TextView = itemView.findViewById(R.id.tv_doctorremark)
+        val mode: TextView = itemView.findViewById(R.id.tv_mode)
         val timestamp: TextView = itemView.findViewById(R.id.tv_timestamp)
         val status:TextView = itemView.findViewById(R.id.status)
         val viewmore: Button = itemView.findViewById(R.id.btn_viewapptdetails)
@@ -67,11 +67,20 @@ class AppointmentAdapter(private val context: Context?, val appointment: ArrayLi
         else if(appt.shldtime.toDate().after(Timestamp.now().toDate())){
             holder.status.text = "UPCOMING"
         }
+        else if (appt.shldtime.toDate().before(Timestamp.now().toDate()) && !appt.status){
+            holder.status.text = "TO BE SCHEDULED"
+        }
         else{
             holder.status.text = "MISSED"
         }
-
-        holder.remark.text = appt.remark
+        var mode = ""
+        if (appt.onlinemode){
+            mode = "Online Mode"
+        }
+        else{
+            mode = "Offline Mode"
+        }
+        holder.mode.text = mode
         holder.timestamp.text = appt.shldtime.toDate().toString()
 
     }

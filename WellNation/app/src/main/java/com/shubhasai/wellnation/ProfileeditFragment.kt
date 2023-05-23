@@ -13,7 +13,6 @@ class ProfileeditFragment : Fragment() {
     private lateinit var binding: FragmentProfileeditBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -26,6 +25,9 @@ class ProfileeditFragment : Fragment() {
         binding.btnSaveVitals.setOnClickListener {
             saveuserdata()
         }
+        binding.btnAddDiseases.setOnClickListener {
+            setdiseases()
+        }
         return binding.root
     }
     fun readUserDetails(){
@@ -35,6 +37,12 @@ class ProfileeditFragment : Fragment() {
         userDetailsCollectionRef.document(Userinfo.userid).get().addOnSuccessListener { document ->
             if (document.exists()) {
                 val user = document.toObject(userdetails::class.java)
+                if (user != null) {
+                    Userinfo.userid = user.userid
+                    Userinfo.email = user.email
+                    Userinfo.uname = user.name
+                    Userinfo.phonenumber = user.phone
+                }
                 binding.etemergencycontact.setText(user?.emergencyNumber)
                 binding.etState.setText(user?.address?.state)
                 binding.etDistrict.setText(user?.address?.district)
@@ -54,6 +62,7 @@ class ProfileeditFragment : Fragment() {
                 binding.Birthmark.setText(vitals?.birthmark)
                 binding.etHeight.setText(vitals?.height)
                 binding.etWeight.setText(vitals?.weight)
+                getdiseaseslist()
             }
         }.addOnFailureListener { exception ->
             Log.w("Firebase Execption", "Error getting user details", exception)
@@ -76,9 +85,30 @@ class ProfileeditFragment : Fragment() {
         val userDetailsCollectionRef = firestore.collection("publicusers")
         val vitals = vitals(height, weight, bloodGroup, birthmark)
         val address = address(state,district,locality,pincode)
-        val userdetails = userdetails(name = Userinfo.uname, email = Userinfo.email, phone = Userinfo.phonenumber,gender = gender, dob = dob, emergencyNumber = emergencyContact, address = address)
+        val hashMap:HashMap<String,Any> = HashMap()
+        val userdetails = userdetails(name = Userinfo.uname, email = Userinfo.email, phone = Userinfo.phonenumber,gender = gender, dob = dob, emergencyNumber = emergencyContact, address = address, userid = Userinfo.userid, familyId = Userinfo.familyId)
         userDetailsCollectionRef.document(Userinfo.userid).collection("vitals").document("info").set(vitals)
         userDetailsCollectionRef.document(Userinfo.userid).set(userdetails)
 
+    }
+    fun getdiseaseslist(){
+        val db = FirebaseFirestore.getInstance().collection("publicusers").document(Userinfo.userid).collection("vitals").document("info")
+        db.get().addOnSuccessListener {
+            val diseases = it.toObject(vitals::class.java)?.diseases
+            if (diseases != null) {
+                for (disease in diseases) {
+                    binding.tvDiseases.append(disease.nameofdisease + ",")
+                }
+            }
+        }
+    }
+    fun setdiseases(){
+        val db = FirebaseFirestore.getInstance().collection("publicusers").document(Userinfo.userid).collection("vitals").document("info")
+        val diseases = ArrayList<disease>()
+        val text = binding.tvDiseases.text.toString()
+        text.split(",").forEach {
+            diseases.add(disease(it))
+        }
+        db.update("diseases", diseases)
     }
 }

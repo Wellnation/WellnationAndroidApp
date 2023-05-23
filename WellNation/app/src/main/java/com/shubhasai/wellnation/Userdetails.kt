@@ -8,6 +8,7 @@ data class userdetails(
     var phone:String="",
     var gender:String="",
     var dob:String="",
+    var familyId:String ="",
     var emergencyNumber: String="",
     var address: address = address(),
 

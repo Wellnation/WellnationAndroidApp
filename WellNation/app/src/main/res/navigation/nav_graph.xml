@@ -92,9 +92,9 @@
         tools:layout="@layout/fragment_booktests" />
     <fragment
         android:id="@+id/diseasesFragment"
-        android:name="com.shubhasai.wellnation.DiseasesFragment"
+        android:name="com.shubhasai.wellnation.AutomatebookingFragment"
         android:label="fragment_diseases"
-        tools:layout="@layout/fragment_diseases" />
+        tools:layout="@layout/fragment_automatebooking" />
     <fragment
         android:id="@+id/hospitalsFragment"
         android:name="com.shubhasai.wellnation.HospitalsFragment"
@@ -125,7 +125,11 @@
         android:id="@+id/appointmentFragment"
         android:name="com.shubhasai.wellnation.AppointmentFragment"
         android:label="fragment_appointment"
-        tools:layout="@layout/fragment_appointment" />
+        tools:layout="@layout/fragment_appointment" >
+        <action
+            android:id="@+id/action_appointmentFragment_to_appointmentdetailsFragment"
+            app:destination="@id/appointmentdetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/testFragment"
         android:name="com.shubhasai.wellnation.TestFragment"
@@ -183,4 +187,18 @@
         android:name="com.shubhasai.wellnation.CampaignFragment"
         android:label="fragment_campaign"
         tools:layout="@layout/fragment_campaign" />
+    <fragment
+        android:id="@+id/appointmentdetailsFragment"
+        android:name="com.shubhasai.wellnation.AppointmentdetailsFragment"
+        android:label="fragment_appointmentdetails"
+        tools:layout="@layout/fragment_appointmentdetails" >
+        <argument
+            android:name="appId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/physiqueFragment"
+        android:name="com.shubhasai.wellnation.PhysiqueFragment"
+        android:label="fragment_physique"
+        tools:layout="@layout/fragment_physique" />
 </navigation>

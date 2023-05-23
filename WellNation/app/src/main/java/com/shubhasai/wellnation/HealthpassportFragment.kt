@@ -2,6 +2,7 @@ package com.shubhasai.wellnation
 
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
@@ -96,7 +97,7 @@ class HealthpassportFragment : Fragment() {
                     userDetailsCollectionRef.document(Userinfo.userid).collection("vitals").document("info").get().addOnSuccessListener { documents ->
                         if (documents.exists()) {
                             val vitals = documents.toObject(vitals::class.java)
-                            qrdata = qrdata+"|"+"bloodgroup="+vitals?.bloodgroup+"|"+"height="+vitals?.height+"|"+"weight="+vitals?.weight+"|"+"birthmark="+vitals?.birthmark+"|"+"diseases="+vitals?.diseases.toString()
+                            qrdata = qrdata+"|"+"bloodgroup="+vitals?.bloodgroup+"|"+"height="+vitals?.height+"|"+"weight="+vitals?.weight+"|"+"birthmark="+vitals?.birthmark+"|"+"diseases="+vitals?.diseases.toString()+"|"+"UserId="+Userinfo.userid
 
                             val bitmap = generateQRCode(qrdata, 500, R.color.Navy_Blue)
                             binding.qrCode.setImageBitmap(bitmap)
@@ -119,7 +120,8 @@ class HealthpassportFragment : Fragment() {
         return FileProvider.getUriForFile(activity!!, "com.shubhasai.wellnation.fileprovider", imageFile)
     }
     private fun sharehealthpassport(){
-        val qrBitmap = (binding.qrCode.drawable as BitmapDrawable).bitmap
+        //val qrBitmap = (binding.qrCode.drawable as BitmapDrawable).bitmap
+        val qrBitmap = createBitmapFromView(binding.qrcardview)
 
 // Create the share intent
         val shareIntent = Intent(Intent.ACTION_SEND).apply {
@@ -130,5 +132,16 @@ class HealthpassportFragment : Fragment() {
 
 // Show the share sheet
         startActivity(Intent.createChooser(shareIntent, "Share Your Wellnation Health Passport"))
+    }
+    fun createBitmapFromView(view: View): Bitmap {
+        view.measure(
+            View.MeasureSpec.makeMeasureSpec(view.width, View.MeasureSpec.EXACTLY),
+            View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+        )
+        view.layout(0, 0, view.measuredWidth, view.measuredHeight)
+        val bitmap = Bitmap.createBitmap(view.measuredWidth, view.measuredHeight, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        view.draw(canvas)
+        return bitmap
     }
 }

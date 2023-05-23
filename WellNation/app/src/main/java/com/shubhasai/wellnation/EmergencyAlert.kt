@@ -7,5 +7,6 @@ data class EmergencyAlert(
    val date:Timestamp = Timestamp.now(),
    val location:GeoPoint = GeoPoint(0.00,0.00),
    val pid:String = "",
-   val text:String = "Help Needed"
+   val text:String = "Help Needed",
+   val ambulanceId:String = ""
 )

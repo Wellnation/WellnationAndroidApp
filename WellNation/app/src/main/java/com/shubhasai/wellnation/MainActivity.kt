@@ -21,6 +21,8 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.messaging.FirebaseMessaging
 import com.shubhasai.wellnation.databinding.ActivityMainBinding
 
 
@@ -28,12 +30,15 @@ class MainActivity : AppCompatActivity() {
     private val REQUEST_FINE_LOCATION_PERMISSION = 1
     private val REQUEST_BACKGROUND_LOCATION_PERMISSION = 2
     private val REQUEST_COURSE_LOCATION_PERMISSION = 3
+    private val REQUEST_CAMERA_PERMISSION = 4
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         permission()
+        readUserDetails()
+        updateTokenId()
         binding.floatingActionButton.setOnClickListener {
             setupbotsuport()
         }
@@ -58,7 +63,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun permission(){
-
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+            == PackageManager.PERMISSION_GRANTED
+        ) {
+            // Permission for camera is already granted
+            // Do something with the camera here
+        } else {
+            // Request permission for camera
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.CAMERA),
+                REQUEST_CAMERA_PERMISSION
+            )
+        }
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
             == PackageManager.PERMISSION_GRANTED
         ) {
@@ -69,7 +86,7 @@ class MainActivity : AppCompatActivity() {
             ActivityCompat.requestPermissions(
                 this,
                 arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                REQUEST_FINE_LOCATION_PERMISSION
+                REQUEST_FINE_LOCATION_PERMISSION,
             )
         }
 
@@ -127,5 +144,43 @@ class MainActivity : AppCompatActivity() {
                 // Do something with the location here
             }
         }
+    }
+    fun readUserDetails() {
+        val firestore = FirebaseFirestore.getInstance()
+        val userDetailsCollectionRef = firestore.collection("publicusers")
+        userDetailsCollectionRef.document(Userinfo.userid).get().addOnSuccessListener { document ->
+            if (document.exists()) {
+                val user = document.toObject(userdetails::class.java)
+                if (user != null) {
+                    Userinfo.userid = user.userid
+                    Userinfo.email = user.email
+                    Userinfo.uname = user.name
+                    Userinfo.phonenumber = user.phone
+                }
+
+            }
+        }.addOnFailureListener { exception ->
+            Log.w("Firebase Execption", "Error getting user details", exception)
+        }
+    }
+    fun updateTokenId(){
+        FirebaseMessaging.getInstance().token
+            .addOnSuccessListener { tokenResult ->
+                val token = tokenResult
+                val db = FirebaseFirestore.getInstance().collection("publicusers").document(Userinfo.userid)
+                val hashmap: HashMap<String, String> = HashMap()
+                hashmap["fcmToken"] = token
+                Userinfo.fcmToken = token
+                db.update(hashmap as Map<String, Any>)
+                    .addOnSuccessListener {
+                        Log.d("TAG", "FCM token updated in Firestore")
+                    }
+                    .addOnFailureListener { e ->
+                        Log.e("TAG", "Error updating FCM token in Firestore", e)
+                    }
+            }
+            .addOnFailureListener { e ->
+                Log.e("TAG", "Error retrieving FCM token", e)
+            }
     }
 }

@@ -28,7 +28,6 @@ class AppointmentbookingFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentAppointmentbookingBinding.inflate(layoutInflater)
-
         return binding.root
     }
 

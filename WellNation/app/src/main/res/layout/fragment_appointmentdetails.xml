@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".AppointmentdetailsFragment">
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardviewPrescription"
+        android:layout_margin="5dp"
+        app:cardCornerRadius="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_margin="5dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:scaleType="centerCrop"
+                android:id="@+id/hospital_image"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:src="@drawable/wellnationheader" />
+            <androidx.cardview.widget.CardView
+                android:layout_margin="5dp"
+                app:cardCornerRadius="10dp"
+                android:elevation="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <LinearLayout
+                        android:layout_margin="10dp"
+                        android:gravity="start"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:textStyle="bold"
+                            android:layout_gravity="end"
+                            android:gravity="end"
+                            android:id="@+id/textViewPatientName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Enter patient name" />
+
+                        <TextView
+                            android:layout_gravity="end"
+                            android:gravity="end"
+                            android:id="@+id/textViewPhoneNumber"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Enter phone number" />
+
+                        <TextView
+                            android:layout_gravity="end"
+                            android:gravity="end"
+                            android:id="@+id/textViewEmailAddress"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Enter email address"/>
+                        <TextView
+                            android:textStyle="bold"
+                            android:layout_marginTop="20dp"
+                            android:id="@+id/textViewAppointmentid"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="AppointmentId: " />
+                        <TextView
+                            android:id="@+id/textDoctorname"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Doctor Name: " />
+
+                        <TextView
+                            android:id="@+id/textHospitalname"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Hospital Name: " />
+                        <TextView
+                            android:id="@+id/textDepartment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Department: " />
+
+                        <TextView
+                            android:id="@+id/textScheduledTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Date: " />
+
+
+                        <TextView
+                            android:id="@+id/textOnlineMode"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Online Mode: " />
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <TextView
+                android:id="@+id/textRemark"
+                android:layout_margin="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Remark: " />
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_margin="10dp"
+                android:id="@+id/recyclerViewMedicines"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+    <Button
+        android:layout_margin="10dp"
+        android:layout_width="wrap_content"
+        android:id="@+id/btnShareappt"
+        android:text="Share the Prescription"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content">
+    </Button>
+</LinearLayout>

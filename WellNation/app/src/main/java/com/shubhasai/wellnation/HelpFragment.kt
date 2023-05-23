@@ -16,7 +16,9 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
@@ -148,16 +150,26 @@ class HelpFragment : Fragment() {
                 if(date != null && distance<5){
                     val emergency = EmergencyAlert(date,location,pid.toString(),text.toString())
                     emergencylist.add(emergency)
-                    val mapView = binding.mapview
+                    val mapView = binding.ambulancemapview
                     mapView.onCreate(null)
                     mapView.onResume()
                     mapView.getMapAsync { googleMap ->
                         // Initialize the Google Map object
                         val placeLatLng = LatLng(location.latitude, location.longitude)
+                        val userLatLng = LatLng(loca.latitude, loca.longitude)
+                        val circleOptions = CircleOptions()
+                            .center(userLatLng)
+                            .radius(5.0*1000)
+                            .fillColor(R.color.Baby_Blue)
                         val markerOptions = MarkerOptions()
                         .position(placeLatLng)
                         .title(pid.toString())
                         googleMap.addMarker(markerOptions)
+                        googleMap.addCircle(circleOptions)
+                        googleMap.setMapStyle(activity?.let {
+                            MapStyleOptions.loadRawResourceStyle(
+                                it,R.raw.map_style)
+                        })
                         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(placeLatLng, 15f))
                     }
                 }

@@ -83,7 +83,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_weight="1"
                     android:layout_width="match_parent"
-                    android:hint="State"
+                    android:hint="Locality"
                     app:boxCornerRadiusBottomEnd="10dp"
                     app:boxCornerRadiusBottomStart="10dp"
                     app:startIconTint="@color/royal_blue"
@@ -205,7 +205,7 @@
                         android:layout_width="match_parent"
                         android:textSize="14sp"
                         android:id="@+id/Birthmark"
-                        android:inputType="number"
+                        android:inputType="text"
                         android:layout_height="match_parent"/>
                 </com.google.android.material.textfield.TextInputLayout>
             </TableRow>
@@ -249,6 +249,40 @@
                 </com.google.android.material.textfield.TextInputLayout>
             </TableRow>
         </TableLayout>
+        <LinearLayout
+            android:layout_marginBottom="10dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_weight="1"
+                android:layout_marginVertical="5dp"
+                android:layout_marginHorizontal="10dp"
+                android:layout_width="0dp"
+                android:hint="Diseases"
+                app:boxCornerRadiusBottomEnd="10dp"
+                app:boxCornerRadiusBottomStart="10dp"
+                app:startIconTint="@color/royal_blue"
+                app:boxCornerRadiusTopEnd="10dp"
+                app:boxCornerRadiusTopStart="10dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_height="match_parent">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:textSize="14sp"
+                    android:id="@+id/tvDiseases"
+                    android:inputType="textPersonName"
+                    android:layout_height="match_parent"/>
+            </com.google.android.material.textfield.TextInputLayout>
+            <Button
+                android:layout_marginHorizontal="5dp"
+                android:layout_width="0dp"
+                android:layout_margin="10dp"
+                android:id="@+id/btnAddDiseases"
+                android:text="Add Diseases Details"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
         <Button
             android:layout_marginVertical="20dp"
             android:padding="10dp"

@@ -33,7 +33,7 @@ class  SignupActivity : AppCompatActivity() {
             if(upass != ucpass){
                 Toast.makeText(this,"Password Doesn't Match", Toast.LENGTH_SHORT).show()
             }
-            if(upass.isNullOrBlank()||ucpass.isNullOrBlank()||umobile.isNullOrBlank()||uemail.isNullOrBlank()||uname.isNullOrBlank()){
+            else if(upass.isNullOrBlank()||ucpass.isNullOrBlank()||umobile.isNullOrBlank()||uemail.isNullOrBlank()||uname.isNullOrBlank()){
                 Toast.makeText(this,"Enter every fields", Toast.LENGTH_SHORT).show()
             }
             else{
@@ -54,12 +54,14 @@ class  SignupActivity : AppCompatActivity() {
                 .addOnCompleteListener{ task->
                     if(task.isSuccessful){
                         val userdata = phone?.let {
-                            userdetails(Userinfo.userid,name,email, it)
+                            userdetails(userid=firebaseregister!!.uid.toString(),name=name,email=email, phone=it)
                         }
                         val firebasedatabase = Firebase.firestore.collection("publicusers")
                         if (userdata != null) {
-                            val userdetails = userdetails(firebaseregister!!.uid.toString(),name,email,phone)
-                            firebasedatabase.document(userdata.userid).set(userdetails).addOnCompleteListener {
+                            Log.d("FirebaseDB","Writing for ${firebasedatabase.id}")
+                            val userdetails = userdetails( userid =  firebaseregister!!.uid.toString(),name = name,email=email,phone = phone)
+                            Log.d("FirebaseDB",userdetails.toString())
+                            firebasedatabase.document(firebaseregister!!.uid.toString()).set(userdetails).addOnCompleteListener {
                                 checkemail()
                             }
                         }
