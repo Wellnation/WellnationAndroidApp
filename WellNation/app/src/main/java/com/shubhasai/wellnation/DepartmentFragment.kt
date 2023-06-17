@@ -163,6 +163,7 @@ class DepartmentFragment : Fragment(),DepartmentAdapter2.DeptClicked,DoctorsAdap
 
     override fun onbooknowtestclicked(testlist: tests) {
         val db = FirebaseFirestore.getInstance().collection("testHistory")
+        Toast.makeText(activity,"Test Booked",Toast.LENGTH_SHORT).show()
         val testdata = testbookingdata(hid = testlist.hid, hname = testlist.hospitalname, patientid = Userinfo.userid, pname = Userinfo.uname, tid = testlist.testid, tname = testlist.testname)
         db.document().set(testdata)
     }
