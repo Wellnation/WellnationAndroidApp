@@ -1,105 +1,185 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".PhysiqueFragment">
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/chart"
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="0dp" />
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_weight="2"
         android:orientation="vertical"
-        android:layout_height="0dp">
-        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/rewards"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:layout_gravity="end"
+            app:iconTint="?attr/colorSecondaryVariant"
+            android:textColor="?attr/colorSecondaryVariant"
+            android:text="WellCoins: 100"
+            app:icon="@drawable/ic_trophy"/>
+        <FrameLayout
             android:layout_margin="10dp"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
+            android:padding="5dp"
+
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-            <EditText
-                android:inputType="number"
-                android:id="@+id/editText1"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:hint="Weight" />
-
-            <EditText
-                android:id="@+id/editText2"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:inputType="number"
-                android:layout_height="wrap_content"
-                android:hint="Height" />
-
-            <Button
-                android:id="@+id/buttonbmi"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="Submit" />
-        </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="15dp"
+                android:id="@+id/tvDisplayScore"
+                android:layout_width="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textSize="24sp"
+                    android:textColor="?attr/colorSecondaryVariant"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:text="Health Score"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:gravity="center"
+                    android:textSize="46sp"
+                    android:textStyle="bold"
+                    android:textColor="?attr/colorSecondaryVariant"
+                    android:layout_width="match_parent"
+                    android:text="0%"
+                    android:id="@+id/tvScore"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content"/>
+                <ImageView
+                    android:layout_gravity="center_horizontal"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_restart"
+                    android:layout_width="50dp"
+                    android:id="@+id/btn_Calculate"
+                    android:layout_height="50dp"
+                    app:tint="@color/Orange" />
+            </LinearLayout>
+            <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                android:id="@+id/circularProgressBar"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:layout_gravity="center_horizontal"
+                app:cpb_background_progressbar_color="@color/quantum_grey200"
+                app:cpb_background_progressbar_width="25dp"
+                app:cpb_progress_direction="to_right"
+                app:cpb_progressbar_color="@color/Orange"
+                app:cpb_progress_max="100"
+                app:cpb_start_angle="270"
+                app:cpb_progress="1"
+                app:cpb_progressbar_width="25dp"
+                app:cpb_round_border="true" />
+        </FrameLayout>
         <LinearLayout
-            android:layout_margin="10dp"
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <EditText
-                android:id="@+id/editText3"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:inputType="number"
-                android:layout_height="wrap_content"
-                android:hint="Sys" />
-
-            <EditText
-                android:id="@+id/editText4"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:inputType="number"
-                android:layout_height="wrap_content"
-                android:hint="Dys" />
-
-            <Button
-                android:id="@+id/buttonbp"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="Submit" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_margin="10dp"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <EditText
-                android:id="@+id/editText5"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:inputType="number"
-                android:layout_height="wrap_content"
-                android:hint="Fasting" />
-
-            <EditText
-                android:id="@+id/editText6"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:inputType="number"
-                android:layout_height="wrap_content"
-                android:hint="Post Meal" />
-
-            <Button
-                android:id="@+id/buttonsugar"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="Submit" />
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <TextView
+                android:textSize="24sp"
+                android:layout_width="wrap_content"
+                android:layout_marginStart="10dp"
+                android:textStyle="bold"
+                android:text="Score Analysis"
+                android:layout_height="wrap_content"/>
+            <com.mackhartley.roundedprogressbar.RoundedProgressBar
+                android:id="@+id/first_bar"
+                android:layout_marginHorizontal="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                app:rpbBackgroundColor="@color/white"
+                app:rpbBackgroundTextColor="#070600"
+                app:rpbCornerRadius="5dp"
+                app:rpbProgressColor="?attr/colorPrimary"
+                android:layout_marginTop="5dp"
+                app:rpbProgress="0"
+                app:rpbProgressTextColor="@color/white"
+                app:rpbTextPadding="12dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Heart Rate Score"
+                android:layout_height="wrap_content"/>
+            <com.mackhartley.roundedprogressbar.RoundedProgressBar
+                android:id="@+id/second_bar"
+                android:layout_marginHorizontal="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                app:rpbBackgroundColor="@color/white"
+                android:layout_marginTop="5dp"
+                app:rpbBackgroundTextColor="#070600"
+                app:rpbCornerRadius="6dp"
+                app:rpbProgressColor="?attr/colorPrimary"
+                app:rpbProgress="0"
+                app:rpbProgressTextColor="@color/white"
+                app:rpbTextPadding="12dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Heart Time Score"
+                android:layout_height="wrap_content"/>
+            <com.mackhartley.roundedprogressbar.RoundedProgressBar
+                android:id="@+id/third_bar"
+                android:layout_marginHorizontal="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                app:rpbBackgroundColor="@color/white"
+                app:rpbBackgroundTextColor="#070600"
+                app:rpbCornerRadius="6dp"
+                app:rpbProgressColor="?attr/colorPrimary"
+                app:rpbProgress="0"
+                android:layout_marginTop="5dp"
+                app:rpbProgressTextColor="@color/white"
+                app:rpbTextPadding="12dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Step Score"
+                android:layout_height="wrap_content"/>
+            <com.mackhartley.roundedprogressbar.RoundedProgressBar
+                android:id="@+id/fourth_bar"
+                android:layout_marginTop="5dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                app:rpbBackgroundColor="@color/white"
+                app:rpbBackgroundTextColor="#070600"
+                app:rpbCornerRadius="6dp"
+                app:rpbProgressColor="?attr/colorPrimary"
+                app:rpbProgress="00"
+                app:rpbProgressTextColor="@color/white"
+                app:rpbTextPadding="12dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Lifestyle Score"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:textSize="24sp"
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:textStyle="bold"
+                android:layout_marginStart="10dp"
+                android:text="Challenges"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="Participate and Earn WellCoins"
+                android:layout_height="wrap_content"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="40dp"
+                android:id="@+id/rvChallenges"
+                android:layout_height="wrap_content"/>
         </LinearLayout>
     </LinearLayout>
-
-
-</LinearLayout>
+</ScrollView>

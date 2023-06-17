@@ -6,6 +6,9 @@
     <item android:icon="@drawable/ic_campaign"
         android:id="@+id/campaignFragment"
         android:title="Campaign"/>
+    <item android:icon="@drawable/ic_wellcheck"
+        android:id="@+id/diseasesFragment"
+        android:title="Wellcheck"/>
     <item android:icon="@drawable/ic_usericon"
         android:id="@+id/profileFragment"
         android:title="Profile"/>

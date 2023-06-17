@@ -46,6 +46,12 @@ class MainActivity : AppCompatActivity() {
             Log.d("Item",it.itemId.toString())
             NavigationUI.onNavDestinationSelected(it,findNavController(binding.navHostFragment.id))
             findNavController(R.id.nav_host_fragment).popBackStack(it.itemId, inclusive = false)
+            if(it.itemId == R.id.diseasesFragment){
+                binding.floatingActionButton.visibility = View.GONE
+            }
+            else{
+                binding.floatingActionButton.visibility = View.VISIBLE
+            }
             true
         }
     }

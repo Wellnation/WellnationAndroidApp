@@ -13,9 +13,9 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.shubhasai.wellnation.databinding.FragmentServicesavailableBinding
 
-class ServicesavailableFragment : Fragment(),TestAdapter.TestClicked {
+class ServicesavailableFragment : Fragment(),DoctorsAdapter.DrClicked {
     private lateinit var binding: FragmentServicesavailableBinding
-    val testlist:ArrayList<tests> = ArrayList()
+    val testlist:ArrayList<DoctorInfo> = ArrayList()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -26,20 +26,25 @@ class ServicesavailableFragment : Fragment(),TestAdapter.TestClicked {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentServicesavailableBinding.inflate(layoutInflater)
-        getavailabletests()
+        getavailabledocs()
         return binding.root
     }
-    fun getavailabletests(){
+    fun getavailabledocs(){
         binding.rvhospitaltests.layoutManager = LinearLayoutManager(activity)
         val db = Firebase.firestore
-        val collectionRef = db.collection("tests")
+        val collectionRef = db.collection("doctors")
         collectionRef.get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
-                    val tests = document.toObject(tests::class.java)
-                    testlist.add(tests)
+                    val tests = document.toObject(DoctorInfo::class.java)
+                    for (hid in tests.hids){
+                        if(hid==Userinfo.hospitalclicked){
+                            testlist.add(tests)
+                            break
+                        }
+                    }
                 }
-                binding.rvhospitaltests.adapter = TestAdapter(activity,testlist,this)
+                binding.rvhospitaltests.adapter = DoctorsAdapter(activity,testlist,this)
             }
             .addOnFailureListener { exception ->
                 Log.d("Firebase", "Error getting Hospitals documents: ", exception)

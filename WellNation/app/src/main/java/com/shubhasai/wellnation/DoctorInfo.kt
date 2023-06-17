@@ -12,5 +12,6 @@ var ratings:Float =
 var speciality:String =
 "",
 var uid:String =
-""
+"",
+    var hids:ArrayList<String> = ArrayList()
 )

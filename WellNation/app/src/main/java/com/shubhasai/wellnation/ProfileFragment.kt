@@ -62,13 +62,10 @@ class ProfileFragment : Fragment() {
         TabLayoutMediator(binding.profiletab,binding.profileViewpager){tab,position->
             when(position){
                 0->{
-                    tab.text="Vitals"
+                    tab.text="Personal Info"
                 }
                 1->{
                     tab.text="Medicines"
-                }
-                2->{
-                    tab.text="Appointments"
                 }
             }
         }.attach()

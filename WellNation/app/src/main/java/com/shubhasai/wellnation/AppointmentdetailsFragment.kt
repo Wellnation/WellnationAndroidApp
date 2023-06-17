@@ -31,6 +31,7 @@ import de.coldtea.smplr.smplralarm.alarmNotification
 import de.coldtea.smplr.smplralarm.channel
 import de.coldtea.smplr.smplralarm.smplrAlarmSet
 import org.json.JSONArray
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -57,7 +58,8 @@ class AppointmentdetailsFragment : Fragment() {
         binding.textViewPhoneNumber.text = "Patient Contact: "+Userinfo.phonenumber
         binding.textViewEmailAddress.text = "Patient EmailId: "+Userinfo.email
         binding.btnShareappt.setOnClickListener {
-            createPdfFromView(binding.cardviewPrescription)
+//            createPdfFromView(binding.cardviewPrescription)
+            createPdfAndShare(binding.cardviewPrescription)
         }
         return binding.root
     }
@@ -110,54 +112,102 @@ class AppointmentdetailsFragment : Fragment() {
             }
         }
     }
-    private fun createPdfFromView(view: View) {
-        // Create a new PDF document
-        val document = PdfDocument()
+//    private fun createPdfFromView(view: View) {
+//        // Create a new PDF document
+//        val document = PdfDocument()
+//
+//        // Create a page info with the desired attributes
+//        val printAttrs = PrintAttributes.Builder()
+//            .setMediaSize(PrintAttributes.MediaSize.ISO_A4)
+//            .setResolution(PrintAttributes.Resolution("pdf", "pdf", 600, 600))
+//            .setMinMargins(PrintAttributes.Margins.NO_MARGINS)
+//            .build()
+//        val pageInfo = PdfDocument.PageInfo.Builder(view.width, view.height, 1).create()
+//
+//        // Start a new page
+//        val page = document.startPage(pageInfo)
+//
+//        // Draw the view on the page's canvas
+//        val canvas = page.canvas
+//        val paint = Paint()
+//        paint.color = Color.WHITE
+//        canvas.drawPaint(paint)
+//        view.draw(canvas)
+//
+//        // Finish the page
+//        document.finishPage(page)
+//
+//        // Save the document to a file
+//        val directoryPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).path
+//        val filePath = "$directoryPath/output.pdf"
+//        val file = File(filePath)
+//
+//        try {
+//            file.createNewFile()
+//            val fos = FileOutputStream(file)
+//            document.writeTo(fos)
+//            document.close()
+//            fos.close()
+//            Toast.makeText(activity, "PDF created successfully", Toast.LENGTH_SHORT).show()
+//            val shareIntent = Intent(Intent.ACTION_SEND)
+//
+//            shareIntent.type = "application/pdf"
+//            val fileUri = activity?.let { FileProvider.getUriForFile(it, "com.shubhasai.wellnation.fileprovider", file) }
+//            shareIntent.putExtra(Intent.EXTRA_STREAM, fileUri)
+//            startActivity(Intent.createChooser(shareIntent, "Share Prescription"))
+//        } catch (e: IOException) {
+//            e.printStackTrace()
+//            Toast.makeText(activity, "Error creating PDF", Toast.LENGTH_SHORT).show()
+//        }
+//    }
+private fun createPdfAndShare(view: View) {
+    // Create a new PDF document
+    val document = PdfDocument()
 
-        // Create a page info with the desired attributes
-        val printAttrs = PrintAttributes.Builder()
-            .setMediaSize(PrintAttributes.MediaSize.ISO_A4)
-            .setResolution(PrintAttributes.Resolution("pdf", "pdf", 600, 600))
-            .setMinMargins(PrintAttributes.Margins.NO_MARGINS)
-            .build()
-        val pageInfo = PdfDocument.PageInfo.Builder(view.width, view.height, 1).create()
+    // Create a page info with the desired attributes
+    val printAttrs = PrintAttributes.Builder()
+        .setMediaSize(PrintAttributes.MediaSize.ISO_A4)
+        .setResolution(PrintAttributes.Resolution("pdf", "pdf", 600, 600))
+        .setMinMargins(PrintAttributes.Margins.NO_MARGINS)
+        .build()
+    val pageInfo = PdfDocument.PageInfo.Builder(view.width, view.height, 1).create()
 
-        // Start a new page
-        val page = document.startPage(pageInfo)
+    // Start a new page
+    val page = document.startPage(pageInfo)
 
-        // Draw the view on the page's canvas
-        val canvas = page.canvas
-        val paint = Paint()
-        paint.color = Color.WHITE
-        canvas.drawPaint(paint)
-        view.draw(canvas)
+    // Draw the view on the page's canvas
+    val canvas = page.canvas
+    val paint = Paint()
+    paint.color = Color.WHITE
+    canvas.drawPaint(paint)
+    view.draw(canvas)
 
-        // Finish the page
-        document.finishPage(page)
+    // Finish the page
+    document.finishPage(page)
 
-        // Save the document to a file
-        val directoryPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).path
-        val filePath = "$directoryPath/output.pdf"
-        val file = File(filePath)
+    try {
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        document.writeTo(byteArrayOutputStream)
+        document.close()
 
-        try {
-            file.createNewFile()
-            val fos = FileOutputStream(file)
-            document.writeTo(fos)
-            document.close()
-            fos.close()
-            Toast.makeText(activity, "PDF created successfully", Toast.LENGTH_SHORT).show()
-            val shareIntent = Intent(Intent.ACTION_SEND)
-
-            shareIntent.type = "application/pdf"
-            val fileUri = activity?.let { FileProvider.getUriForFile(it, "com.shubhasai.wellnation.fileprovider", file) }
-            shareIntent.putExtra(Intent.EXTRA_STREAM, fileUri)
-            startActivity(Intent.createChooser(shareIntent, "Share Prescription"))
-        } catch (e: IOException) {
-            e.printStackTrace()
-            Toast.makeText(activity, "Error creating PDF", Toast.LENGTH_SHORT).show()
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        shareIntent.type = "application/pdf"
+        val pdfData: ByteArray = byteArrayOutputStream.toByteArray()
+        val pdfUri = activity?.let { context ->
+            val tempFile = File(context.cacheDir, "prescription_pdf.pdf")
+            val fileOutputStream = FileOutputStream(tempFile)
+            fileOutputStream.write(pdfData)
+            fileOutputStream.close()
+            FileProvider.getUriForFile(context, "com.shubhasai.wellnation.fileprovider", tempFile)
         }
+        shareIntent.putExtra(Intent.EXTRA_STREAM, pdfUri)
+        startActivity(Intent.createChooser(shareIntent, "Share Prescription"))
+    } catch (e: IOException) {
+        e.printStackTrace()
+        Toast.makeText(activity, "Error creating PDF", Toast.LENGTH_SHORT).show()
     }
+}
+
     fun schedulealarm(hr:Int,min:Int,id:String,name:String){
         val arrayList = ArrayList<String>()
         val jsonString = sharedPreferences.getString("apptId", null)
@@ -256,4 +306,5 @@ class AppointmentdetailsFragment : Fragment() {
             // Handle case when the ArrayList is not found in SharedPreferences
         }
     }
+
 }

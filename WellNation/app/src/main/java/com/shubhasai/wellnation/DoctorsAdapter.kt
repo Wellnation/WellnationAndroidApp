@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 
-class DoctorsAdapter(private val context: Context?, val doctorslist: ArrayList<DoctorInfo>):
+class DoctorsAdapter(private val context: Context?, val doctorslist: ArrayList<DoctorInfo>,val listener:DrClicked):
     RecyclerView.Adapter<DoctorsAdapter.ViewHolder>() {
     class ViewHolder(itemview:View):RecyclerView.ViewHolder(itemview) {
         val cardview: CardView = itemView.findViewById(R.id.cardViewdoctor)
@@ -20,7 +20,7 @@ class DoctorsAdapter(private val context: Context?, val doctorslist: ArrayList<D
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DoctorsAdapter.ViewHolder {
         val viewholder = ViewHolder(LayoutInflater.from(context).inflate(R.layout.doctors_itemview, parent, false))
         viewholder.cardview.setOnClickListener {
-
+            listener.onbooknowclicked(doctorslist[viewholder.adapterPosition])
         }
         return viewholder
     }
@@ -34,6 +34,11 @@ class DoctorsAdapter(private val context: Context?, val doctorslist: ArrayList<D
 
     override fun getItemCount(): Int {
         return doctorslist.size
+    }
+    interface DrClicked {
+        fun onbooknowclicked(dr: DoctorInfo){
+
+        }
     }
 
 }

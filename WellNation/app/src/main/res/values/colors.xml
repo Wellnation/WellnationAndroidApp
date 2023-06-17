@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="Baby_Blue">#CAE8FF</color>
-    <color name="Blue_Grotto">#655AFF</color>
-    <color name="royal_blue">#5CB6F9</color>
-    <color name="Navy_Blue">#050A30</color>
+    <color name="Baby_Blue">#E4ECFE</color>
+    <color name="background_white">#F0F9FF</color>
+    <color name="background_dark">#1C1C1C</color>
+    <color name="Blue_Grotto">#1976D2</color>
+    <color name="royal_blue">#1976D2</color>
+    <color name="Navy_Blue">#0D47A1</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="white">#FFFFFF</color>
     <color name="light_blue_50">#FFE1F5FE</color>
     <color name="light_blue_200">#FF81D4FA</color>
     <color name="light_blue_600">#FF039BE5</color>
     <color name="light_blue_900">#FF01579B</color>
     <color name="overlay_color">#80090909</color>
+    <color name="Orange">#FFC107</color>
 </resources>
+<!--    5CB6F9-->

@@ -22,7 +22,8 @@
         android:id="@+id/floatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="12dp"
+        android:backgroundTint="@color/Orange"
         android:clickable="true"
         app:layout_constraintBottom_toTopOf="@+id/nav_menu"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,7 +46,7 @@
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_menu"
-        style="@style/Widget.MaterialComponents.BottomNavigationView"
+        style="@style/Widget.Material3.BottomAppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -7,6 +7,7 @@
     android:orientation="vertical"
     tools:context=".ProfileeditFragment">
     <LinearLayout
+        android:layout_marginTop="20dp"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -32,6 +33,7 @@
             android:layout_width="wrap_content"
             android:padding="10dp"
             android:textSize="16sp"
+            android:layout_marginTop="20dp"
             android:textStyle="bold"
             android:text="Address"
             android:layout_marginHorizontal="20dp"
@@ -40,7 +42,8 @@
             android:layout_marginHorizontal="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <TableRow>
+            <TableRow
+                android:layout_marginTop="10dp">
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_weight="1"
                     android:layout_width="match_parent"
@@ -79,7 +82,8 @@
                         android:layout_height="match_parent"/>
                 </com.google.android.material.textfield.TextInputLayout>
             </TableRow>
-            <TableRow>
+            <TableRow
+                android:layout_marginTop="10dp">
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_weight="1"
                     android:layout_width="match_parent"
@@ -125,13 +129,15 @@
             android:textSize="16sp"
             android:textStyle="bold"
             android:text="Vitals"
+            android:layout_marginTop="20dp"
             android:layout_marginHorizontal="20dp"
             android:layout_height="wrap_content"/>
         <TableLayout
             android:layout_marginHorizontal="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <TableRow>
+            <TableRow
+                android:layout_marginTop="10dp">
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_weight="1"
                     android:layout_width="match_parent"
@@ -170,7 +176,8 @@
                         android:layout_height="match_parent"/>
                 </com.google.android.material.textfield.TextInputLayout>
             </TableRow>
-            <TableRow>
+            <TableRow
+                android:layout_marginTop="10dp">
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_weight="1"
                     android:layout_width="match_parent"
@@ -209,7 +216,8 @@
                         android:layout_height="match_parent"/>
                 </com.google.android.material.textfield.TextInputLayout>
             </TableRow>
-            <TableRow>
+            <TableRow
+                android:layout_marginTop="10dp">
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_weight="1"
                     android:layout_width="match_parent"
@@ -250,16 +258,15 @@
             </TableRow>
         </TableLayout>
         <LinearLayout
+            android:layout_marginTop="20dp"
             android:layout_marginBottom="10dp"
             android:layout_marginHorizontal="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_weight="1"
-                android:layout_marginVertical="5dp"
-                android:layout_marginHorizontal="10dp"
                 android:layout_width="0dp"
-                android:hint="Diseases"
+                android:hint="Diseases Name"
                 app:boxCornerRadiusBottomEnd="10dp"
                 app:boxCornerRadiusBottomStart="10dp"
                 app:startIconTint="@color/royal_blue"
@@ -279,14 +286,14 @@
                 android:layout_width="0dp"
                 android:layout_margin="10dp"
                 android:id="@+id/btnAddDiseases"
-                android:text="Add Diseases Details"
+                android:text="Add"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"/>
+                android:layout_height="match_parent"/>
         </LinearLayout>
         <Button
             android:layout_marginVertical="20dp"
             android:padding="10dp"
-            android:layout_marginHorizontal="30dp"
+            android:layout_marginHorizontal="20dp"
             android:layout_width="match_parent"
             android:id="@+id/btnSaveVitals"
             android:text="SAVE"

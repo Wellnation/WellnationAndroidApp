@@ -27,17 +27,17 @@ class HospitaldetailsFragment : Fragment() {
         TabLayoutMediator(binding.hospitaltab,binding.hospitalViewpager){tab,position->
             when(position){
                 0->{
-                    tab.text="Departments"
+                    tab.text="Services Available"
                 }
                 1->{
-                    tab.text="Tests"
+                    tab.text="Doctors"
                 }
-                2->{
-                    tab.text="Bloodbank"
-                }
-                3->{
-                    tab.text="Rooms"
-                }
+//                2->{
+//                    tab.text="Bloodbank"
+//                }
+//                3->{
+//                    tab.text="Rooms"
+//                }
 //                4->{
 //                    tab.text="Doctors"
 //                }
@@ -55,8 +55,8 @@ class HospitaldetailsFragment : Fragment() {
                 val hospitaldetails = it.toObject(HospitalList::class.java)
                 if (hospitaldetails != null) {
                     binding.tvhospitalName.text = hospitaldetails.name
-                    binding.hospitalRatingbar.rating = hospitaldetails.rating
-                    binding.tvhospitaladdress.text = hospitaldetails.address.toString()
+//                    binding.hospitalRatingbar.rat = hospitaldetails.rating
+                    binding.tvhospitaladdress.text = hospitaldetails.address.locality+", "+hospitaldetails.address.district+", "+hospitaldetails.address.state+", "+hospitaldetails.address.pincode
                     binding.tvContactnumber.text = hospitaldetails.phone
                 }
             }

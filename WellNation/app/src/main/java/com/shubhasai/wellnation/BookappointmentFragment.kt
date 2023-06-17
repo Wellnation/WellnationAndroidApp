@@ -41,6 +41,7 @@ class BookappointmentFragment : Fragment() {
         binding.btnbookappointment.setOnClickListener {
             bookappointment()
             //getdepartment()
+
         }
         return binding.root
     }
@@ -56,9 +57,10 @@ class BookappointmentFragment : Fragment() {
             // Handle online booking logic here
             val medicine:ArrayList<medicines> = ArrayList()
             val db =  Firebase.firestore.collection("appointments")
-            val key = db.id.toString()
-            val booking_details = AppointmentData(key,"",args.hospitalid,medicine,Userinfo.userid, remark = "", reqtime = Timestamp.now(), shldtime = Timestamp.now(), status = false, symptoms = binding.etsymptoms.text.toString(), dept = "",onlinemode = true)
-            db.document().set(booking_details)
+            val key = db.document().id.toString()
+            val booking_details = AppointmentData(key,Userinfo.drclickedclicked,args.hospitalid,medicine,Userinfo.userid, remark = "", reqtime = Timestamp.now(), shldtime = Timestamp.now(), status = false, symptoms = binding.etsymptoms.text.toString(), dept = Userinfo.departmentclicked,onlinemode = true)
+            db.document(key).set(booking_details)
+            Toast.makeText(activity,"Booked",Toast.LENGTH_SHORT).show()
         }
 
         // Offline button
@@ -66,12 +68,12 @@ class BookappointmentFragment : Fragment() {
             Toast.makeText(activity, "Offline booking selected", Toast.LENGTH_SHORT).show()
             // Handle offline booking logic here
             val db =  Firebase.firestore.collection("appointments")
-            val key = db.id.toString()
+            val key = db.document().id.toString()
             val medicine:ArrayList<medicines> = ArrayList()
-            val booking_details = AppointmentData(key,"",args.hospitalid,medicine,Userinfo.userid, remark = "", reqtime = Timestamp.now(), shldtime = Timestamp.now(), status = false, symptoms = binding.etsymptoms.text.toString(),dept = "",onlinemode = false)
-            db.document().set(booking_details)
+            val booking_details = AppointmentData(key,Userinfo.drclickedclicked,args.hospitalid,medicine,Userinfo.userid, remark = "", reqtime = Timestamp.now(), shldtime = Timestamp.now(), status = false, symptoms = binding.etsymptoms.text.toString(),dept = Userinfo.departmentclicked,onlinemode = false)
+            db.document(key).set(booking_details)
+            Toast.makeText(activity,"Booked",Toast.LENGTH_SHORT).show()
         }
-
         val dialog = builder.create()
         dialog.show()
     }

@@ -2,15 +2,23 @@
     <!-- Base application theme. -->
     <style name="Theme.WellNation" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/Baby_Blue</item>
-        <item name="colorPrimaryVariant">@color/Blue_Grotto</item>
+        <item name="colorPrimary">@color/Blue_Grotto</item>
+        <item name="colorPrimaryVariant">@color/Navy_Blue</item>
         <item name="colorOnPrimary">#000000</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/Navy_Blue</item>
-        <item name="colorSecondaryVariant">@color/royal_blue</item>
+        <item name="colorSecondaryVariant">@color/white</item>
         <item name="colorOnSecondary">#FFFFFF</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="android:windowBackground">@color/background_dark</item>
+    </style>
+    <style name="CustomSearchView" parent="Widget.AppCompat.SearchView">
+        <!-- Remove the bottom line -->
+        <item name="android:background">@drawable/searchview_background</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:paddingBottom">10dp</item>
     </style>
 </resources>

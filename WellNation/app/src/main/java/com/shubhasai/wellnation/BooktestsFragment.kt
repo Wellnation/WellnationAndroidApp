@@ -6,7 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.shubhasai.wellnation.databinding.FragmentBooktestsBinding
@@ -29,7 +31,7 @@ class BooktestsFragment : Fragment(),TestAdapter.TestClicked {
         return binding.root
     }
     fun getavailabletests(){
-        binding.rvtests.layoutManager = LinearLayoutManager(activity)
+        binding.rvtests.layoutManager = GridLayoutManager(activity,2)
         val db = Firebase.firestore
         val collectionRef = db.collection("tests")
         collectionRef.get()
@@ -43,5 +45,10 @@ class BooktestsFragment : Fragment(),TestAdapter.TestClicked {
             .addOnFailureListener { exception ->
                 Log.d("Firebase", "Error getting Hospitals documents: ", exception)
             }
+    }
+    override fun onbooknowtestclicked(testlist: tests) {
+        val db = FirebaseFirestore.getInstance().collection("testHistory")
+        val testdata = testbookingdata(hid = testlist.hid, hname = testlist.hospitalname, patientid = Userinfo.userid, pname = Userinfo.uname, tid = testlist.testid, tname = testlist.testname)
+        db.document().set(testdata)
     }
 }

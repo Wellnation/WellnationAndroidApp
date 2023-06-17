@@ -20,12 +20,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top|right"
+        android:background="@drawable/tabbackground"
         android:layout_margin="5dp"
         android:padding="8dp"
-        android:background="@drawable/rectangular_button"
         android:orientation="horizontal">
 
         <TextView
+            android:textStyle="bold"
             android:id="@+id/dropdown_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

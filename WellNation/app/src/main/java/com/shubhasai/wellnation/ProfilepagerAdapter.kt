@@ -9,7 +9,7 @@ class ProfilepagerAdapter(
     fragmentManager: FragmentManager, lifecycle: Lifecycle
 ): FragmentStateAdapter(fragmentManager, lifecycle) {
     override fun getItemCount(): Int {
-        return 3
+        return 2
     }
 
     override fun createFragment(position: Int): Fragment {
@@ -19,9 +19,6 @@ class ProfilepagerAdapter(
             }
             1->{
                 MedicineFragment()
-            }
-            2->{
-                AppointmentFragment()
             }
             else->{
                 Fragment()

@@ -8,6 +8,8 @@ class Userinfo {
         var phonenumber:String = ""
         var emergencyphonenumber:String = ""
         var hospitalclicked:String = ""
+        var departmentclicked:String = ""
+        var drclickedclicked:String = ""
         var fcmToken:String = ""
         var familyId:String = ""
         val deptList: ArrayList<DepartmentData> = ArrayList()

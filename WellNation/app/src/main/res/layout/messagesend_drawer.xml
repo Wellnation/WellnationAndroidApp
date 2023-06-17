@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+    <EditText
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:hint="Enter Your Message"
+        android:gravity="start"
+        android:id="@+id/etcommunitymessage"
+        android:minHeight="300dp"
+        android:layout_height="wrap_content"/>
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_gravity="center"
+        android:padding="10dp"
+        android:id="@+id/btn_Send"
+        android:src="@drawable/ic_send"
+        android:layout_height="60dp"/>
+
+</LinearLayout>

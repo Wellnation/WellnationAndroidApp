@@ -46,11 +46,9 @@ class HomeFragment : Fragment() {
 //            binding.imageView2.visibility = View.GONE
 //            binding.imageView3.visibility = View.GONE
 //        }
-        binding.EmergencyContact.setOnClickListener {
-            val sosPhoneNumber = Userinfo.emergencyphonenumber
-            val sosMessage = "Help! I need assistance!"
-            sendSOSMessage(sosPhoneNumber, sosMessage)
-            makeCall(sosPhoneNumber)
+        binding.btnHospitalisation.setOnClickListener {
+            val direction = HomeFragmentDirections.actionHomeFragmentToHospitalisationFragment()
+            findNavController().navigate(direction)
         }
         binding.Exercise.setOnClickListener {
             val directions = HomeFragmentDirections.actionHomeFragmentToExerciseFragment()
@@ -73,9 +71,9 @@ class HomeFragment : Fragment() {
             val direction = HomeFragmentDirections.actionHomeFragmentToBooktestsFragment()
             view?.findNavController()?.navigate(direction)
         }
-        binding.btnDiseases.setOnClickListener {
-            val direction = HomeFragmentDirections.actionHomeFragmentToDiseasesFragment()
-            view?.findNavController()?.navigate(direction)
+        binding.btnCommunity.setOnClickListener {
+            val directions = HomeFragmentDirections.actionHomeFragmentToCommunityFragment()
+            findNavController().navigate(directions)
         }
         binding.btnHelp.setOnClickListener {
             val direction = HomeFragmentDirections.actionHomeFragmentToHelpFragment()

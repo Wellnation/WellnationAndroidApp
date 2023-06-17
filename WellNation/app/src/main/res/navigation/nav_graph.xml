@@ -52,6 +52,12 @@
         <action
             android:id="@+id/action_homeFragment_to_exerciseFragment"
             app:destination="@id/exerciseFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_hospitalisationFragment"
+            app:destination="@id/hospitalisationFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_communityFragment"
+            app:destination="@id/communityFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -68,8 +74,7 @@
             app:argType="string" />
         <argument
             android:name="doctorid"
-            app:argType="string"
-            app:nullable="true" />
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/healthpassportFragment"
@@ -201,4 +206,40 @@
         android:name="com.shubhasai.wellnation.PhysiqueFragment"
         android:label="fragment_physique"
         tools:layout="@layout/fragment_physique" />
+    <fragment
+        android:id="@+id/hospitalisationFragment"
+        android:name="com.shubhasai.wellnation.HospitalisationFragment"
+        android:label="fragment_hospitalisation"
+        tools:layout="@layout/fragment_hospitalisation" >
+        <action
+            android:id="@+id/action_hospitalisationFragment_to_hospitalisationdetailsFragment"
+            app:destination="@id/hospitalisationdetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/hospitalisationdetailsFragment"
+        android:name="com.shubhasai.wellnation.HospitalisationdetailsFragment"
+        android:label="fragment_hospitalisationdetails"
+        tools:layout="@layout/fragment_hospitalisationdetails" >
+        <argument
+            android:name="id"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/communityFragment"
+        android:name="com.shubhasai.wellnation.CommunityFragment"
+        android:label="fragment_community"
+        tools:layout="@layout/fragment_community" >
+        <action
+            android:id="@+id/action_communityFragment_to_channeldetailsFragment"
+            app:destination="@id/channeldetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/channeldetailsFragment"
+        android:name="com.shubhasai.wellnation.ChanneldetailsFragment"
+        android:label="fragment_channeldetails"
+        tools:layout="@layout/fragment_channeldetails" >
+        <argument
+            android:name="id"
+            app:argType="string" />
+    </fragment>
 </navigation>

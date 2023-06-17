@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.shubhasai.wellnation.databinding.FragmentTestbookingBinding
@@ -25,5 +26,10 @@ class TestbookingFragment : Fragment(),TestAdapter.TestClicked {
         // Inflate the layout for this fragment
         binding = FragmentTestbookingBinding.inflate(layoutInflater)
         return binding.root
+    }
+    override fun onbooknowtestclicked(testlist: tests) {
+        val db = FirebaseFirestore.getInstance().collection("testHistory")
+        val testdata = testbookingdata(hid = testlist.hid, hname = testlist.hospitalname, patientid = Userinfo.userid, pname = Userinfo.uname, tid = testlist.testid, tname = testlist.testname)
+        db.document().set(testdata)
     }
 }

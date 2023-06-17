@@ -23,6 +23,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
@@ -65,12 +66,19 @@ class AutomatebookingFragment : Fragment(),DepartmentAdapter.DeptClicked {
         speechRecognizer.setRecognitionListener(SpeechRecognitionListener())
         binding = FragmentAutomatebookingBinding.inflate(inflater, container, false)
         binding.symptoms.visibility = View.VISIBLE
+        getdepartments("teeth")
+        getdepartments("teeth")
         binding.submit.setOnClickListener {
             symptoms = binding.etSymptoms.text.toString()
-            getdepartment(symptoms)
+            if (symptoms!=""){
+                getdepartment(symptoms)
+            }
+            else{
+                Toast.makeText(activity,"Trying After Sometime",Toast.LENGTH_SHORT).show()
+            }
         }
         departmentAdapter = DepartmentAdapter(activity as Context?, depts, hids, this)
-        binding.rvhospitadepartmentwise.layoutManager = LinearLayoutManager(activity)
+        binding.rvhospitadepartmentwise.layoutManager = GridLayoutManager(activity,2)
         binding.rvhospitadepartmentwise.adapter = departmentAdapter
         binding.btnMic.setOnClickListener {
             requestAudioPermissions()
@@ -86,61 +94,96 @@ class AutomatebookingFragment : Fragment(),DepartmentAdapter.DeptClicked {
                 .method("POST", requestBody)
                 .url("https://api-inference.huggingface.co/models/oyesaurav/dwellbert")
                 .build()
-            okHttpClient.newCall(request).enqueue(object : Callback {
-                override fun onFailure(call: Call, e: IOException) {
-                    // Handle this
-                }
-
-                override fun onResponse(call: Call, response: Response) {
-                    // Handle this
-                    CoroutineScope(Dispatchers.Main).launch {
-                        binding.secondquestion.visibility = View.VISIBLE
-                        binding.departmentdropdown.visibility =View.VISIBLE
-                        val responseBody = response.body?.string()
-                        val departmet = Gson().fromJson(responseBody, mlapiresponse::class.java)
-                        if (responseBody != null) {
-                            Log.d("response",responseBody.toString())
-                        }
-                        val optionsList = ArrayList<String>()
-                        for (department in departmet[0]){
-                            optionsList.add(department.label)
-                        }
-                        departmentselected = optionsList[0]
-                        binding.symptomresult.text = "On the basis of your symptoms we suggest you to visit ${optionsList[0]}. If you want to book for any other department select from below."
-                        val adapter =
-                            activity?.let {
-                                ArrayAdapter(
-                                    it,
-                                    R.layout.simple_spinner_item,
-                                    optionsList
-                                )
-                            }
-                        adapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        binding.spinnerOptions.adapter = adapter
-                        binding.spinnerOptions.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                                val selectedOption = optionsList[position]
-                                // Handle the selected option
-                                departmentselected = selectedOption
-                                binding.secondresponse.visibility = View.VISIBLE
-                                binding.tvselectedDepartment.text = "Selected Department is $departmentselected"
-                                binding.rvhospitadepartmentwise.visibility = View.VISIBLE
-                                gethospitals(departmentselected)
-                            }
-
-                            override fun onNothingSelected(parent: AdapterView<*>?) {
-                                // Handle case where no option is selected
-                                departmentselected = optionsList[0]
-                                binding.secondresponse.visibility = View.VISIBLE
-                                binding.tvselectedDepartment.text = "Selected Department is {$departmentselected}"
-                                binding.rvhospitadepartmentwise.visibility = View.VISIBLE
-                                gethospitals(departmentselected)
-                            }
-                        }
+            try{
+                Toast.makeText(activity,"Trying to get data",Toast.LENGTH_SHORT).show()
+                okHttpClient.newCall(request).enqueue(object : Callback {
+                    override fun onFailure(call: Call, e: IOException) {
+                        // Handle this
                     }
 
-                }
-            })
+                    override fun onResponse(call: Call, response: Response) {
+                        // Handle this
+                        CoroutineScope(Dispatchers.Main).launch {
+                            binding.secondquestion.visibility = View.VISIBLE
+                            binding.departmentdropdown.visibility =View.VISIBLE
+                            val responseBody = response.body?.string()
+                            val departmet = Gson().fromJson(responseBody, mlapiresponse::class.java)
+                            if (responseBody != null) {
+                                Log.d("response",responseBody.toString())
+                            }
+                            val optionsList = ArrayList<String>()
+                            for (department in departmet[0]){
+                                optionsList.add(department.label)
+                            }
+                            departmentselected = optionsList[0]
+                            binding.symptomresult.text = "On the basis of your symptoms we suggest you to visit ${optionsList[0]}. If you want to book for any other department select from below."
+                            val adapter =
+                                activity?.let {
+                                    ArrayAdapter(
+                                        it,
+                                        R.layout.simple_spinner_item,
+                                        optionsList
+                                    )
+                                }
+                            adapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                            binding.spinnerOptions.adapter = adapter
+                            binding.spinnerOptions.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                                    val selectedOption = optionsList[position]
+                                    // Handle the selected option
+                                    departmentselected = selectedOption
+                                    binding.secondresponse.visibility = View.VISIBLE
+                                    binding.tvselectedDepartment.text = "Selected Department is $departmentselected"
+                                    binding.rvhospitadepartmentwise.visibility = View.VISIBLE
+                                    gethospitals(departmentselected)
+                                }
+
+                                override fun onNothingSelected(parent: AdapterView<*>?) {
+                                    // Handle case where no option is selected
+                                    departmentselected = optionsList[0]
+                                    binding.secondresponse.visibility = View.VISIBLE
+                                    binding.tvselectedDepartment.text = "Selected Department is {$departmentselected}"
+                                    binding.rvhospitadepartmentwise.visibility = View.VISIBLE
+                                    gethospitals(departmentselected)
+                                }
+                            }
+                        }
+
+                    }
+                })
+            }
+            catch (e:Exception){
+
+            }
+
+        }
+    }
+    fun getdepartments(symtomps:String){
+        lifecycleScope.launch {
+            val okHttpClient = OkHttpClient()
+            val payload = symtomps
+            val requestBody = payload.toRequestBody()
+            val request = Request.Builder()
+                .method("POST", requestBody)
+                .url("https://api-inference.huggingface.co/models/oyesaurav/dwellbert")
+                .build()
+            try{
+                okHttpClient.newCall(request).enqueue(object : Callback {
+                    override fun onFailure(call: Call, e: IOException) {
+                        // Handle this
+                    }
+
+                    override fun onResponse(call: Call, response: Response) {
+                        // Handle this
+                        CoroutineScope(Dispatchers.Main).launch {
+
+                        }
+                    }
+                })
+            }
+            catch (e:Exception){
+
+            }
 
         }
     }
