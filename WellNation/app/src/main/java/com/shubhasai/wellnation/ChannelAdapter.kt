@@ -36,8 +36,8 @@ class ChannelAdapter(private val context: Context, private val channels: ArrayLi
         private val messageTextView: TextView = itemView.findViewById(R.id.messageTextView)
 
         fun bind(channel: Channel) {
-            createdByTextView.text = "Created by: ${channel.name}"
-            createdAtTextView.text = "Created at: ${channel.createdAt.toDate().toString()}"
+            createdByTextView.text = "Posted by: ${channel.name}"
+            createdAtTextView.text = "Posted at: ${channel.createdAt.toDate().toString()}"
             messageTextView.text =  Html.fromHtml(channel.message, Html.FROM_HTML_MODE_LEGACY).toString()
         }
     }

@@ -31,8 +31,8 @@ class RepliesAdapter(private val replies: ArrayList<replies>) :
         private val messageTextView: TextView = itemView.findViewById(R.id.messageTextView)
 
         fun bind(reply: replies) {
-            createdByTextView.text = "Created by: ${reply.name}"
-            createdAtTextView.text = "Created at: ${reply.createdAt.toDate()}"
+            createdByTextView.text = "Replied by: ${reply.name}"
+            createdAtTextView.text = "Posted at: ${reply.createdAt.toDate()}"
             messageTextView.text =  Html.fromHtml(reply.message, Html.FROM_HTML_MODE_LEGACY).toString()
         }
     }

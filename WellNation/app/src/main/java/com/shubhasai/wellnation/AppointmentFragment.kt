@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.shubhasai.wellnation.databinding.FragmentAppointmentBinding
@@ -46,7 +47,7 @@ class AppointmentFragment : Fragment(),AppointmentAdapter.ApptClicked {
         binding.rvMyappointments.layoutManager = LinearLayoutManager(activity)
         val db = Firebase.firestore
         val appotlists : ArrayList<AppointmentData> =  ArrayList()
-        val collectionRef = db.collection("appointments")
+        val collectionRef = db.collection("appointments").orderBy("shldtime", Query.Direction.DESCENDING)
         collectionRef.get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {

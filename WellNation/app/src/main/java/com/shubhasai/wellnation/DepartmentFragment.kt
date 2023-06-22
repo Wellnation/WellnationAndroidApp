@@ -157,6 +157,7 @@ class DepartmentFragment : Fragment(),DepartmentAdapter2.DeptClicked,DoctorsAdap
     }
 
     override fun onbooknowclicked(dr: DoctorInfo) {
+        Userinfo.drclickedclicked = dr.uid
         val directions = HospitaldetailsFragmentDirections.actionHospitaldetailsFragmentToBookappointmentFragment(Userinfo.hospitalclicked,dr.uid)
         findNavController().navigate(directions)
     }

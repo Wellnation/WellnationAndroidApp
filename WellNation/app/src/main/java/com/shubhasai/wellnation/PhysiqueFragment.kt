@@ -208,7 +208,8 @@ class PhysiqueFragment : Fragment(),ChallengeAdapter.challengeClicked {
                 Log.i("TAG","HeartScore:$heartscore")
                 Log.i("TAG","sum HeartBeat:$heartbeat")
                 Log.i("TAG","Count HeartBeat:$countheartbeat")
-                heartbeat /= countheartbeat
+                if(countheartbeat>0) heartbeat /= countheartbeat
+                else heartbeat = 0.0
                 Log.i("TAG","Avg HeartBeat:$heartbeat")
                 val NormalizedHeartRate = 1-(Math.abs(heartbeat - 72.0) / 72)
                 val NormalizedHeartScore =(heartscore.toFloat()/150)
