@@ -20,7 +20,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top|right"
-        android:background="@drawable/tabbackground"
+        android:backgroundTint="@color/Orange"
+        android:background="@drawable/tabindicator"
         android:layout_margin="5dp"
         android:padding="8dp"
         android:orientation="horizontal">
@@ -33,10 +34,10 @@
             android:layout_height="wrap_content"
             android:text="Select Radius:"
             android:textSize="16sp" />
-
         <Spinner
             android:id="@+id/radius_spinner"
             android:layout_width="wrap_content"
+            android:backgroundTint="@color/Navy_Blue"
             android:layout_height="wrap_content"
             android:entries="@array/radius_options"
             android:gravity="center"

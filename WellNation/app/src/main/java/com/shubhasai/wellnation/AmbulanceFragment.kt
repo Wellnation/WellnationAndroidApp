@@ -222,10 +222,6 @@ class AmbulanceFragment : Fragment() {
                             .fillColor(R.color.Baby_Blue)
                         googleMap.addCircle(circleOptions)
                         googleMap.addMarker(markerOptions)
-                        googleMap.setMapStyle(activity?.let {
-                            MapStyleOptions.loadRawResourceStyle(
-                                it,R.raw.map_style)
-                        })
                        googleMap.setOnMarkerClickListener {marker->
                             val dialog = activity?.let { BottomSheetDialog(it) }
                             dialog?.setContentView(R.layout.ambulance_dialoglayout)
@@ -269,18 +265,6 @@ class AmbulanceFragment : Fragment() {
                     }
                     else{
                         val userlocation = LatLng(loca.latitude, loca.longitude)
-                        val markerOptions = MarkerOptions()
-                            .position(userlocation)
-                        val circleOptions = CircleOptions()
-                            .center(userlocation)
-                            .radius(dist*1000)
-                            .fillColor(R.color.Baby_Blue)
-                        googleMap.addCircle(circleOptions)
-                        googleMap.addMarker(markerOptions)
-                        googleMap.setMapStyle(activity?.let {
-                            MapStyleOptions.loadRawResourceStyle(
-                                it,R.raw.map_style)
-                        })
                         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userlocation, 15f))
                     }
                 }

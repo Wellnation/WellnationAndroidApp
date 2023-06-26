@@ -156,6 +156,12 @@ class HomeFragment : Fragment(),UpcomingAppointmentAdapter.ApptClicked,MyTestAda
                         appotlists.add(appointment)
                     }
                 }
+                if (appotlists.size == 0){
+                    binding.tvUpcomingAppointment.visibility = View.GONE
+                }
+                else{
+                    binding.tvUpcomingAppointment.visibility = View.VISIBLE
+                }
                 binding.rvUpcomingAppointment.adapter = UpcomingAppointmentAdapter(activity as Context?,appotlists,this)
             }
             .addOnFailureListener { exception ->
@@ -174,6 +180,12 @@ class HomeFragment : Fragment(),UpcomingAppointmentAdapter.ApptClicked,MyTestAda
                             Timestamp.now().toDate()))){
                         appotlists.add(appointment)
                     }
+                }
+                if (appotlists.size == 0){
+                    binding.tvUpcomingTests.visibility = View.GONE
+                }
+                else{
+                    binding.tvUpcomingTests.visibility = View.VISIBLE
                 }
                 binding.rvUpcomingTests.adapter = MyTestAdapter(activity as Context?,appotlists,this)
             }

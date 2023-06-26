@@ -90,7 +90,6 @@ class HelpFragment : Fragment() {
 
                     } else {
                         getemergencylist(location)
-                        Toast.makeText(activity,"Your Location: "+location.longitude.toString()+","+location.latitude.toString(), Toast.LENGTH_SHORT).show()
                     }
 
 
@@ -148,8 +147,6 @@ class HelpFragment : Fragment() {
             val lastLocation : Location? = p0.lastLocation
             if (lastLocation != null) {
                 getemergencylist(lastLocation)
-                Toast.makeText(activity,lastLocation.latitude.toString(), Toast.LENGTH_SHORT).show()
-
             }
         }
     }
@@ -167,7 +164,7 @@ class HelpFragment : Fragment() {
                 Log.d("key1",key)
                 val location = GeoPoint(lat!!,long!!)
                 val distance = distance(location.latitude,location.longitude,loca.latitude,loca.longitude)
-                if(date != null && distance<5){
+                if(date != null && distance<20){
                     val emergency = EmergencyAlert(date,location,pid.toString(),text.toString())
                     emergencylist.add(emergency)
                     val mapView = binding.ambulancemapview
@@ -185,10 +182,6 @@ class HelpFragment : Fragment() {
                         .position(placeLatLng)
                         googleMap.addMarker(markerOptions)
                         googleMap.addCircle(circleOptions)
-                        googleMap.setMapStyle(activity?.let {
-                            MapStyleOptions.loadRawResourceStyle(
-                                it,R.raw.map_style)
-                        })
                         googleMap.setOnMarkerClickListener {marker->
                             val dialog = activity?.let { BottomSheetDialog(it) }
                             dialog?.setContentView(R.layout.help_emergency_drawer)
@@ -236,14 +229,18 @@ class HelpFragment : Fragment() {
                                 }
                             }
 
-                            if (rv != null) {
-
-                            }
-
                             dialog?.show()
                             true
                         }
                         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(placeLatLng, 15f))
+                    }
+                }
+                else{
+                    val mapView = binding.ambulancemapview
+                    mapView.onCreate(null)
+                    mapView.onResume()
+                    mapView.getMapAsync { googleMap ->
+                        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(loca.latitude, loca.longitude), 15f))
                     }
                 }
             }
