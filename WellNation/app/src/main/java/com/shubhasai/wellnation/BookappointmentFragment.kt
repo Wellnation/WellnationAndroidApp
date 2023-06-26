@@ -10,11 +10,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import com.shubhasai.wellnation.databinding.FragmentBookappointmentBinding
+import com.shubhasai.wellnation.utils.DialogUtils
 import kotlinx.coroutines.launch
 import okhttp3.Call
 import okhttp3.Callback
@@ -23,9 +26,14 @@ import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class BookappointmentFragment : Fragment() {
     private lateinit var binding:FragmentBookappointmentBinding
+    var selectedDate: Long? = null
+    var selectedTime: Int? = null
     val args:BookappointmentFragmentArgs by navArgs()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,40 +47,85 @@ class BookappointmentFragment : Fragment() {
         // Inflate the layout for this fragment
         binding =  FragmentBookappointmentBinding.inflate(layoutInflater)
         binding.btnbookappointment.setOnClickListener {
-            bookappointment()
+            binding.btnSelectDate.performClick()
             //getdepartment()
+        }
+        binding.btnSelectDate.setOnClickListener {
+            val datePicker: MaterialDatePicker<Long> = MaterialDatePicker
+                .Builder
+                .datePicker()
+                .setInputMode(MaterialDatePicker.INPUT_MODE_TEXT)
+                .setTitleText("Select date of Appointment")
+                .build()
+            datePicker.show(parentFragmentManager, "DATE_PICKER")
 
+            datePicker.addOnPositiveButtonClickListener { selection ->
+                selectedDate = selection
+                binding.btnSelectTime.performClick()
+            }
+        }
+
+        binding.btnSelectTime.setOnClickListener {
+            val timePicker: MaterialTimePicker = MaterialTimePicker
+                .Builder()
+                .setTitleText("Select a time")
+                .setInputMode(MaterialTimePicker.INPUT_MODE_KEYBOARD)
+                .build()
+            timePicker.show(parentFragmentManager, "TIME_PICKER")
+
+            timePicker.addOnPositiveButtonClickListener { selection ->
+                selectedTime = timePicker.hour * 60 + timePicker.minute
+                updateSelectedDateTimeText()
+            }
         }
         return binding.root
     }
+    fun updateSelectedDateTimeText() {
+        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val date = selectedDate?.let { sdf.format(it) } ?: ""
+        val time = selectedTime?.let { String.format("%02d:%02d", it / 60, it % 60) } ?: ""
 
-    fun bookappointment(){
+        if (selectedDate != null && selectedTime != null) {
+            val calendar = Calendar.getInstance()
+            calendar.timeInMillis = selectedDate!!
+            calendar.set(Calendar.HOUR_OF_DAY, selectedTime!! / 60)
+            calendar.set(Calendar.MINUTE, selectedTime!! % 60)
+            calendar.set(Calendar.SECOND, 0)
+            calendar.set(Calendar.MILLISECOND, 0)
+
+            val combinedTimestamp = Timestamp(calendar.time)
+            // Save the combinedTimestamp to Firebase Firestore
+            bookappointment(combinedTimestamp)
+            // ...
+        }
+    }
+
+    fun bookappointment(timestamp:Timestamp){
         val builder = AlertDialog.Builder(activity)
         builder.setTitle("Appointment Booking")
         builder.setMessage("Please select the mode of appointment booking:")
 
         // Online button
         builder.setPositiveButton("Online") { _, _ ->
-            Toast.makeText(activity, "Online booking selected", Toast.LENGTH_SHORT).show()
             // Handle online booking logic here
             val medicine:ArrayList<medicines> = ArrayList()
             val db =  Firebase.firestore.collection("appointments")
             val key = db.document().id.toString()
-            val booking_details = AppointmentData(key,Userinfo.drclickedclicked,args.hospitalid,medicine,Userinfo.userid, remark = "", reqtime = Timestamp.now(), shldtime = Timestamp.now(), status = false, symptoms = binding.etsymptoms.text.toString(), dept = Userinfo.departmentclicked,onlinemode = true)
+            val booking_details = AppointmentData(key,Userinfo.drclickedclicked,args.hospitalid,medicine,Userinfo.userid, remark = "", reqtime = timestamp, shldtime = Timestamp.now(), status = false, symptoms = binding.etsymptoms.text.toString(), dept = Userinfo.departmentclicked,onlinemode = true, sharerecord = binding.sharerecord.isChecked)
             db.document(key).set(booking_details)
-            Toast.makeText(activity,"Booked",Toast.LENGTH_SHORT).show()
+            activity?.let { DialogUtils.showLottieBottomSheetDialog(it,R.raw.done,"Appointment Booked Successfully") }
+
         }
 
         // Offline button
         builder.setNegativeButton("Offline") { _, _ ->
-            Toast.makeText(activity, "Offline booking selected", Toast.LENGTH_SHORT).show()
             // Handle offline booking logic here
             val db =  Firebase.firestore.collection("appointments")
             val key = db.document().id.toString()
             val medicine:ArrayList<medicines> = ArrayList()
-            val booking_details = AppointmentData(key,Userinfo.drclickedclicked,args.hospitalid,medicine,Userinfo.userid, remark = "", reqtime = Timestamp.now(), shldtime = Timestamp.now(), status = false, symptoms = binding.etsymptoms.text.toString(),dept = Userinfo.departmentclicked,onlinemode = false)
+            val booking_details = AppointmentData(key,Userinfo.drclickedclicked,args.hospitalid,medicine,Userinfo.userid, remark = "", reqtime = timestamp, shldtime = Timestamp.now(), status = false, symptoms = binding.etsymptoms.text.toString(),dept = Userinfo.departmentclicked,onlinemode = false,sharerecord = binding.sharerecord.isChecked)
             db.document(key).set(booking_details)
-            Toast.makeText(activity,"Booked",Toast.LENGTH_SHORT).show()
+            activity?.let { DialogUtils.showLottieBottomSheetDialog(it,R.raw.done,"Appointment Booked Successfully") }
         }
         val dialog = builder.create()
         dialog.show()

@@ -6,7 +6,8 @@
     android:orientation="vertical"
     tools:context=".AppointmentFragment">
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
         android:id="@+id/rv_myappointments"
         android:layout_margin="10dp"
         android:layout_height="wrap_content"/>

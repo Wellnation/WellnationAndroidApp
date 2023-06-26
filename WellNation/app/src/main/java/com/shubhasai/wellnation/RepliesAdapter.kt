@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.shubhasai.wellnation.utils.dateandtimeformat
 
 class RepliesAdapter(private val replies: ArrayList<replies>) :
     RecyclerView.Adapter<RepliesAdapter.ReplyViewHolder>() {
@@ -31,8 +32,8 @@ class RepliesAdapter(private val replies: ArrayList<replies>) :
         private val messageTextView: TextView = itemView.findViewById(R.id.messageTextView)
 
         fun bind(reply: replies) {
-            createdByTextView.text = "Replied by: ${reply.name}"
-            createdAtTextView.text = "Posted at: ${reply.createdAt.toDate()}"
+            createdByTextView.text = "By: ${reply.name}"
+            createdAtTextView.text = "Posted: "+dateandtimeformat.formatSocialTime(reply.createdAt.toDate())
             messageTextView.text =  Html.fromHtml(reply.message, Html.FROM_HTML_MODE_LEGACY).toString()
         }
     }

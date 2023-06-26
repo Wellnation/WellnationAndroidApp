@@ -10,11 +10,6 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <ImageView
-            android:scaleType="fitXY"
-            android:src="@drawable/hospitalheader"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="vertical"
@@ -36,6 +31,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <LinearLayout
+                        android:padding="30dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
@@ -43,11 +39,10 @@
 
                         <ImageView
                             android:id="@+id/hospital_image"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
                             android:layout_margin="10dp"
-                            android:src="@drawable/hospital"
-                            app:tint="@color/white" />
+                            android:src="@drawable/hospital" />
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -57,17 +52,15 @@
 
                             <TextView
                                 android:textStyle="bold"
-                                android:textColor="@color/white"
                                 android:id="@+id/tvhospital_name"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="10dp"
                                 android:text="Hospital Name"
-                                android:textSize="18sp" />
+                                android:textSize="16sp" />
 
                             <TextView
                                 android:textStyle="bold"
-                                android:textColor="@color/white"
                                 android:id="@+id/tvhospitaladdress"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -75,17 +68,16 @@
                                 android:layout_marginBottom="5dp"
                                 android:maxLines="2"
                                 android:text="Address"
-                                android:textSize="12sp" />
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:textStyle="bold"
-                                android:textColor="@color/white"
                                 android:id="@+id/tv_contactnumber"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
                                 android:text="Contact Number"
-                                android:textSize="12sp" />
+                                android:textSize="14sp" />
 
                             <com.chaek.android.RatingBar
                                 android:id="@+id/hospital_ratingbar"
@@ -95,7 +87,7 @@
                                 android:layout_marginTop="10dp"
                                 android:text="Hello World!"
                                 app:rating_flag="FIVE"
-                                app:rating_star_color="@color/white"
+                                app:rating_star_color="@color/Orange"
                                 app:rating_star_empty_color="#989898"
                                 app:rating_star_height="30dp"
                                 app:rating_star_margin="5dp"

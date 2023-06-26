@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.shubhasai.wellnation.databinding.FragmentHospitalisationdetailsBinding
 class HospitalisationdetailsFragment : Fragment() {
     private lateinit var binding:FragmentHospitalisationdetailsBinding
@@ -27,7 +28,7 @@ class HospitalisationdetailsFragment : Fragment() {
     }
     fun getlogs(){
         val logs:ArrayList<hlogs> = ArrayList()
-        val db  = FirebaseFirestore.getInstance().collection("admissions").document(arg.id).collection("logs").get().addOnSuccessListener {
+        val db  = FirebaseFirestore.getInstance().collection("admissions").document(arg.id).collection("logs").orderBy("logDate",Query.Direction.DESCENDING).get().addOnSuccessListener {
             for (log in it.documents){
                 val data = log.toObject(hlogs::class.java)
                 if (data != null) {

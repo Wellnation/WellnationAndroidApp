@@ -37,6 +37,7 @@ import com.journeyapps.barcodescanner.BarcodeCallback
 import com.journeyapps.barcodescanner.BarcodeResult
 import com.journeyapps.barcodescanner.DecoratedBarcodeView
 import com.shubhasai.wellnation.databinding.FragmentProfileBinding
+import org.w3c.dom.Text
 import kotlin.math.roundToInt
 
 class ProfileFragment : Fragment() {
@@ -101,7 +102,6 @@ class ProfileFragment : Fragment() {
 
     private fun showAlertDialog() {
         val alertDialogBuilder = AlertDialog.Builder(activity)
-
         alertDialogBuilder.setTitle("No family Added")
         alertDialogBuilder.setMessage("Do you want to")
 
@@ -254,10 +254,20 @@ class ProfileFragment : Fragment() {
 
     }
     fun showbuttomsheet(members:ArrayList<userdetails>){
+
         Log.d("family","buttom sheet called")
         val dialog = activity?.let { BottomSheetDialog(it) }
         dialog?.setContentView(R.layout.family_buttom_sheet)
         val rv = dialog?.findViewById<RecyclerView>(R.id.familyrv)
+        val text = dialog?.findViewById<TextView>(R.id.noFamilyText)
+        if (members.size==0){
+            if (text != null) {
+                text.visibility = View.VISIBLE
+            }
+            else{
+                text?.visibility = View.GONE
+            }
+        }
         if (rv != null) {
             rv.layoutManager = LinearLayoutManager(context)
             rv.adapter = FamilyMemberAdapter(members)

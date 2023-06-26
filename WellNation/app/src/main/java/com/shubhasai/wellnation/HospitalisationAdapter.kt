@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.shubhasai.wellnation.utils.dateandtimeformat
 
 class HospitalisationAdapter(private val context: Context, private val hospitalisations: ArrayList<hospitalisationdata>,val listener:HospitalisationClicked) :
     RecyclerView.Adapter<HospitalisationAdapter.ViewHolder>() {
@@ -23,8 +24,8 @@ class HospitalisationAdapter(private val context: Context, private val hospitali
         val hospitalisation = hospitalisations[position]
 
         holder.hosName.text = hospitalisation.hName
-        holder.sdate.text = hospitalisation.dateAdmitted.toDate().toString()
-        holder.edate.text = hospitalisation.dateReleased.toDate().toString()
+        holder.sdate.text = "From: "+dateandtimeformat.formatFirebaseDateTime(hospitalisation.dateAdmitted)
+        holder.edate.text = "Till: "+dateandtimeformat.formatFirebaseDateTime(hospitalisation.dateReleased)
     }
 
     override fun getItemCount(): Int {

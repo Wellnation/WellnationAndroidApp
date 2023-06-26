@@ -23,11 +23,15 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.shubhasai.wellnation.databinding.FragmentDepartmentBinding
+import com.shubhasai.wellnation.utils.DialogUtils
 
 
 class DepartmentFragment : Fragment(),DepartmentAdapter2.DeptClicked,DoctorsAdapter.DrClicked,TestAdapter.TestClicked {
     private lateinit var binding: FragmentDepartmentBinding
     val testlist:ArrayList<tests> = ArrayList()
+
+    val roomlist:ArrayList<roomdetails> = ArrayList()
+    private lateinit var adapter : RoomAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -39,8 +43,9 @@ class DepartmentFragment : Fragment(),DepartmentAdapter2.DeptClicked,DoctorsAdap
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentDepartmentBinding.inflate(layoutInflater)
+        adapter  = RoomAdapter(activity,roomlist)
         val deptList: ArrayList<DepartmentData> = ArrayList()
-        binding.rvhospitaldepartament.layoutManager = GridLayoutManager(activity,2)
+        binding.rvhospitaldepartament.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
         val db = Firebase.firestore
         Log.d("hid",Userinfo.hospitalclicked)
         val collectionRef =
@@ -66,6 +71,8 @@ class DepartmentFragment : Fragment(),DepartmentAdapter2.DeptClicked,DoctorsAdap
         headerRow.addView(createHeaderTextView("Availability"))
         headerRow.addView(createHeaderTextView("Description"))
         binding.tableLayout.addView(headerRow)
+        binding.roomRv.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
+        binding.roomRv.adapter = adapter
         return binding.root
     }
     private fun createHeaderTextView(text: String): TextView {
@@ -89,7 +96,7 @@ class DepartmentFragment : Fragment(),DepartmentAdapter2.DeptClicked,DoctorsAdap
         return textView
     }
     fun getavailabletests(){
-        binding.rvtests.layoutManager = GridLayoutManager(activity,2)
+        binding.rvtests.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
         val db = Firebase.firestore
         val collectionRef = db.collection("tests")
         collectionRef.get()
@@ -164,9 +171,9 @@ class DepartmentFragment : Fragment(),DepartmentAdapter2.DeptClicked,DoctorsAdap
 
     override fun onbooknowtestclicked(testlist: tests) {
         val db = FirebaseFirestore.getInstance().collection("testHistory")
-        Toast.makeText(activity,"Test Booked",Toast.LENGTH_SHORT).show()
         val testdata = testbookingdata(hid = testlist.hid, hname = testlist.hospitalname, patientid = Userinfo.userid, pname = Userinfo.uname, tid = testlist.testid, tname = testlist.testname)
         db.document().set(testdata)
+        activity?.let { DialogUtils.showLottieBottomSheetDialog(it,R.raw.done,"Test Booked Successfully") }
     }
     fun getroomdetails(){
         val typesArray:ArrayList<String> = ArrayList()
@@ -189,10 +196,15 @@ class DepartmentFragment : Fragment(),DepartmentAdapter2.DeptClicked,DoctorsAdap
         val collectionRef = db.collection("users")
         collectionRef.document(Userinfo.hospitalclicked).collection("beds").whereEqualTo("type",type.type).whereEqualTo("status",true).get().addOnSuccessListener{
             val dataRow = TableRow(activity)
-            dataRow.addView(createDataTextView(type.type))
-            dataRow.addView(createDataTextView(type.cost))
-            dataRow.addView(createDataTextView(it.documents.size.toString()))
-            dataRow.addView(createDataTextView(type.description))
+            roomlist.add(
+                roomdetails(
+                    type.type,
+                    type.cost,
+                    it.documents.size.toString(),
+                    type.description
+                )
+            )
+            adapter.notifyDataSetChanged()
             binding.tableLayout.addView(dataRow)
         }
     }

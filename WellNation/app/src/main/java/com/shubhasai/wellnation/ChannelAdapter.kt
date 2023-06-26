@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.shubhasai.wellnation.utils.dateandtimeformat
 
 class ChannelAdapter(private val context: Context, private val channels: ArrayList<Channel> = ArrayList(),val listener:ChannelClicked ) :
     RecyclerView.Adapter<ChannelAdapter.ChannelViewHolder>() {
@@ -36,8 +37,8 @@ class ChannelAdapter(private val context: Context, private val channels: ArrayLi
         private val messageTextView: TextView = itemView.findViewById(R.id.messageTextView)
 
         fun bind(channel: Channel) {
-            createdByTextView.text = "Posted by: ${channel.name}"
-            createdAtTextView.text = "Posted at: ${channel.createdAt.toDate().toString()}"
+            createdByTextView.text = "By: ${channel.name}"
+            createdAtTextView.text = "Posted: "+ dateandtimeformat.formatSocialTime(channel.createdAt.toDate())
             messageTextView.text =  Html.fromHtml(channel.message, Html.FROM_HTML_MODE_LEGACY).toString()
         }
     }

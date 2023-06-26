@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.Query
@@ -44,7 +45,7 @@ class AppointmentFragment : Fragment(),AppointmentAdapter.ApptClicked {
     }
 
     fun getmyappointment(){
-        binding.rvMyappointments.layoutManager = LinearLayoutManager(activity)
+        binding.rvMyappointments.layoutManager = GridLayoutManager(activity,2)
         val db = Firebase.firestore
         val appotlists : ArrayList<AppointmentData> =  ArrayList()
         val collectionRef = db.collection("appointments").orderBy("shldtime", Query.Direction.DESCENDING)
@@ -77,7 +78,6 @@ class AppointmentFragment : Fragment(),AppointmentAdapter.ApptClicked {
 
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse(url)
-
             try {
                 startActivity(intent)
             } catch (e: ActivityNotFoundException) {

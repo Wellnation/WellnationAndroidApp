@@ -2,7 +2,8 @@
 <!-- item_channel.xml -->
 <androidx.cardview.widget.CardView
     android:id="@+id/channelCard"
-    android:layout_margin="2dp"
+    android:layout_marginVertical="1dp"
+    android:layout_marginHorizontal="2dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -15,27 +16,35 @@
             android:id="@+id/messageTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Hey I want a Book"
+            android:textSize="14sp"
+            android:autoLink="all"
             android:textAppearance="?android:textAppearanceMedium"
             android:padding="8dp" />
         <LinearLayout
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
+            android:gravity="center"
             android:layout_height="wrap_content">
             <ImageView
                 android:layout_marginTop="10dp"
-                android:layout_width="20dp"
-                android:src="@drawable/ic_usericon"
-                android:layout_height="20dp"/>
+                android:layout_width="30dp"
+                android:layout_margin="2dp"
+                android:src="@drawable/usericon"
+                android:layout_height="30dp"/>
             <TextView
+                android:gravity="center_vertical"
                 android:id="@+id/createdByTextView"
-                android:textSize="12sp"
-                android:layout_marginStart="20dp"
+                android:textSize="11sp"
+                android:layout_marginStart="0dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp" />
+                android:layout_height="match_parent"/>
         </LinearLayout>
 
         <TextView
-            android:textSize="10sp"
+            android:layout_marginBottom="5dp"
+            android:textSize="11sp"
+            android:padding="5dp"
             android:id="@+id/createdAtTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

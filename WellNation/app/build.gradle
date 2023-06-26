@@ -112,4 +112,9 @@ dependencies {
     implementation 'com.mikhaellopez:circularprogressbar:3.1.0'
     implementation 'com.github.MackHartley:RoundedProgressBar:3.0.0'
 
+    //Circular Progressbar
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    // Carousel Dependency
+//    implementation 'com.github.jama5262:CarouselView:1.2.2'
+
 }

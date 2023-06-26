@@ -41,6 +41,7 @@ import com.google.maps.GeoApiContext
 import com.google.maps.android.PolyUtil
 import com.google.maps.model.DirectionsResult
 import com.shubhasai.wellnation.databinding.FragmentAmbulanceBinding
+import com.shubhasai.wellnation.utils.DialogUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -105,9 +106,7 @@ class AmbulanceFragment : Fragment() {
 
                     } else {
                         getambulancedata(location)
-                        Toast.makeText(activity,"Your Location: "+location.longitude.toString()+","+location.latitude.toString(), Toast.LENGTH_SHORT).show()
                     }
-
 
                 }
             }else Toast.makeText(activity,"Please enable the Location Services", Toast.LENGTH_SHORT).show()
@@ -164,7 +163,6 @@ class AmbulanceFragment : Fragment() {
             if (lastLocation != null) {
                 Log.d("get ambulance","with new location")
                 getambulancedata(lastLocation)
-                Toast.makeText(activity,lastLocation.latitude.toString(), Toast.LENGTH_SHORT).show()
 
             }
             else{
@@ -196,7 +194,7 @@ class AmbulanceFragment : Fragment() {
                     val distance = distance(location.latitude,location.longitude,loca.latitude,loca.longitude)
                     Log.d("data",distance.toString())
                     if (distance<dist && status==true){
-
+                        googleMap.clear()
                         Log.d("data","ambulance available")
                         cost *= distance.toInt()
                         val text = "Status: Available, Contact Number: $contact \n Vechicle Number: $vechiclenumber \n Cost: $cost"
@@ -259,7 +257,7 @@ class AmbulanceFragment : Fragment() {
                                 db?.update("pid",Userinfo.userid)
                                 db?.update("pidcontact",Userinfo.phonenumber)
                                 db?.update("pfcmToken",Userinfo.fcmToken)
-                                Toast.makeText(activity,"Booked Ambulance Successfully",Toast.LENGTH_SHORT).show()
+                                activity?.let { it1 -> DialogUtils.showLottieBottomSheetDialog(it1,R.raw.ambulance,"Booked Ambulance Successfully") }
                                 if (id != null) {
                                     plotrode(id)
                                 }
@@ -270,7 +268,20 @@ class AmbulanceFragment : Fragment() {
                         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(placeLatLng, 15f))
                     }
                     else{
-                        Toast.makeText(activity,"No Ambulance Available", Toast.LENGTH_SHORT).show()
+                        val userlocation = LatLng(loca.latitude, loca.longitude)
+                        val markerOptions = MarkerOptions()
+                            .position(userlocation)
+                        val circleOptions = CircleOptions()
+                            .center(userlocation)
+                            .radius(dist*1000)
+                            .fillColor(R.color.Baby_Blue)
+                        googleMap.addCircle(circleOptions)
+                        googleMap.addMarker(markerOptions)
+                        googleMap.setMapStyle(activity?.let {
+                            MapStyleOptions.loadRawResourceStyle(
+                                it,R.raw.map_style)
+                        })
+                        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userlocation, 15f))
                     }
                 }
             }

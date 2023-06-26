@@ -2,9 +2,11 @@ package com.shubhasai.wellnation
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
+import android.net.Uri
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
@@ -12,21 +14,36 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
+import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import com.google.firestore.v1.StructuredQuery.Order
 import com.shubhasai.wellnation.databinding.FragmentHelpBinding
+import com.shubhasai.wellnation.utils.DialogUtils
 import org.imperiumlabs.geofirestore.GeoFirestore
 import org.imperiumlabs.geofirestore.GeoLocation
 import org.imperiumlabs.geofirestore.listeners.GeoQueryEventListener
 import java.lang.Math.*
+import kotlin.math.roundToInt
 
 class HelpFragment : Fragment() {
     private lateinit var binding: FragmentHelpBinding
@@ -49,6 +66,7 @@ class HelpFragment : Fragment() {
             )
         }!!
         binding = FragmentHelpBinding.inflate(layoutInflater)
+        getLastLocation()
         binding.floatingActionButton2.setOnClickListener {
             // Check if location permission is granted
             getLastLocation()
@@ -138,13 +156,15 @@ class HelpFragment : Fragment() {
     fun getemergencylist(loca:Location){
         val db = FirebaseFirestore.getInstance()
         var emergencylist:ArrayList<EmergencyAlert> = ArrayList()
-        db.collection("emergency").get().addOnSuccessListener {
+        db.collection("emergency").orderBy("date",Query.Direction.ASCENDING).get().addOnSuccessListener {
             for (document in it){
                 val lat = document.getGeoPoint("location")?.latitude
                 val long = document.getGeoPoint("location")?.longitude
                 val pid = document.getString("pid")
                 val date = document.getTimestamp("date")
                 val text = document.getString("text")
+                val key = document.getString("emergencyId").toString()
+                Log.d("key1",key)
                 val location = GeoPoint(lat!!,long!!)
                 val distance = distance(location.latitude,location.longitude,loca.latitude,loca.longitude)
                 if(date != null && distance<5){
@@ -163,13 +183,66 @@ class HelpFragment : Fragment() {
                             .fillColor(R.color.Baby_Blue)
                         val markerOptions = MarkerOptions()
                         .position(placeLatLng)
-                        .title(pid.toString())
                         googleMap.addMarker(markerOptions)
                         googleMap.addCircle(circleOptions)
                         googleMap.setMapStyle(activity?.let {
                             MapStyleOptions.loadRawResourceStyle(
                                 it,R.raw.map_style)
                         })
+                        googleMap.setOnMarkerClickListener {marker->
+                            val dialog = activity?.let { BottomSheetDialog(it) }
+                            dialog?.setContentView(R.layout.help_emergency_drawer)
+                            val id = dialog?.findViewById<TextView>(R.id.emergencyId)
+                            id?.text = "Emergency Id: "+key.toString()
+                            Log.d("key",key)
+                            val rv = dialog?.findViewById<RecyclerView>(R.id.DEmergencyLogRv)
+                            val etText = dialog?.findViewById<EditText>(R.id.Detmsgl)
+                            val btnSend = dialog?.findViewById<ImageView>(R.id.Dbtn_send)
+                            val logs: ArrayList<emergencyactiondata> = ArrayList()
+                            btnSend?.setOnClickListener {
+                                val firebase = Firebase.firestore.collection("emergency")
+                                val msg = etText?.text.toString()
+                                val log = emergencyactiondata(Userinfo.userid,msg,Userinfo.uname,
+                                    Timestamp.now())
+                                firebase.document(key).collection("logs").document().set(log)
+                            }
+                            val firebase = key?.let { it1 ->
+                                Firebase.firestore
+                                    .collection("emergency")
+                                    .document(it1)
+                                    .collection("logs")
+                                    .orderBy("timestamp",Query.Direction.ASCENDING)
+                            }
+
+                            if (firebase != null) {
+                                firebase.addSnapshotListener { snapshot, error ->
+                                    if (error != null) {
+                                        // Handle error
+                                        return@addSnapshotListener
+                                    }
+
+                                    snapshot?.let { querySnapshot ->
+                                        logs.clear()
+                                        for (log in querySnapshot.documents) {
+                                            val data = log.toObject(emergencyactiondata::class.java)
+                                            data?.let { logs.add(it) }
+                                        }
+                                        if (rv != null) {
+                                            rv.layoutManager = LinearLayoutManager(activity)
+                                            rv.adapter = EmergencyActionAdapter(logs)
+                                        }
+
+                                    }
+                                }
+                            }
+
+                            if (rv != null) {
+
+                            }
+
+                            dialog?.show()
+                            true
+                        }
                         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(placeLatLng, 15f))
                     }
                 }

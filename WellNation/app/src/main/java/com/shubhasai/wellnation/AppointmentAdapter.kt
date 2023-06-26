@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.shubhasai.wellnation.utils.dateandtimeformat
 
 class AppointmentAdapter(private val context: Context?, val appointment: ArrayList<AppointmentData>,val listener:ApptClicked ): RecyclerView.Adapter<AppointmentAdapter.ViewHolder>() {
     class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
@@ -81,7 +82,7 @@ class AppointmentAdapter(private val context: Context?, val appointment: ArrayLi
             mode = "Offline Mode"
         }
         holder.mode.text = mode
-        holder.timestamp.text = appt.shldtime.toDate().toString()
+        holder.timestamp.text = dateandtimeformat.formatFirebaseDateTime(appt.shldtime)
 
     }
     interface ApptClicked {

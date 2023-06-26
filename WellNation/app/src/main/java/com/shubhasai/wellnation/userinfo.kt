@@ -13,5 +13,6 @@ class Userinfo {
         var fcmToken:String = ""
         var familyId:String = ""
         val deptList: ArrayList<DepartmentData> = ArrayList()
+        var emergencykey:String = ""
     }
 }

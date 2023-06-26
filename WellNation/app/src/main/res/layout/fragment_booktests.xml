@@ -7,9 +7,10 @@
     android:layout_height="match_parent"
     tools:context=".BooktestsFragment">
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_marginHorizontal="10dp"
         android:id="@+id/rvtests"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
         android:layout_height="wrap_content"/>
 

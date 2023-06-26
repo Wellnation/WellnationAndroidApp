@@ -15,6 +15,7 @@ data class AppointmentData(
     var status:Boolean = false,
     var symptoms:String = "",
     var dept:String = "",
-    var onlinemode:Boolean = false
+    var onlinemode:Boolean = false,
+    var sharerecord:Boolean = false
 ) {
 }

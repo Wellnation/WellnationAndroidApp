@@ -8,5 +8,7 @@ data class EmergencyAlert(
    val location:GeoPoint = GeoPoint(0.00,0.00),
    val pid:String = "",
    val text:String = "Help Needed",
-   val ambulanceId:String = ""
+   val ambulanceId:String = "",
+   val emergencyId:String = " ",
+   val liveStatus:Boolean =true
 )

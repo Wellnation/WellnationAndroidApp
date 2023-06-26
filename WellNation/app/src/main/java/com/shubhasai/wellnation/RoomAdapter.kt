@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 
-class RoomAdapter(private val context: Context?, val roomlist: ArrayList<room>): RecyclerView.Adapter<RoomAdapter.ViewHolder>() {
+class RoomAdapter(private val context: Context?, val roomlist: ArrayList<roomdetails>): RecyclerView.Adapter<RoomAdapter.ViewHolder>() {
     class ViewHolder(itemView:View):RecyclerView.ViewHolder(itemView) {
         val roomcardview: CardView = itemView.findViewById(R.id.cardViewroom)
         val roomtype: TextView = itemView.findViewById(R.id.tv_roomtype)
@@ -34,9 +34,9 @@ class RoomAdapter(private val context: Context?, val roomlist: ArrayList<room>):
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val room = roomlist[position]
-        holder.roomtype.text = "Room Type: "+room.type
-        holder.roomcapacity.text = "Capacity: "+room.capacity.toString()
-        holder.roomavailable.text = "Available: "+room.currAvail.toString()
+        holder.roomtype.text = room.name
+        holder.roomcapacity.text = "Availability: "+room.availability.toString()
+        holder.roomavailable.text = "Description: "+room.description.toString()
         holder.roomprice.text = "Rs. "+room.cost.toString()
     }
 }

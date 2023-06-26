@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.shubhasai.wellnation.utils.dateandtimeformat
 
 class CampaignAdapter(private val context: Context?,val campaigns: ArrayList<campaigndata>, val listener:CampaignClicked) :
     RecyclerView.Adapter<CampaignAdapter.ViewHolder>() {
@@ -33,8 +34,8 @@ class CampaignAdapter(private val context: Context?,val campaigns: ArrayList<cam
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val campaign = campaigns[position]
         holder.name.text = campaign.name
-        holder.start.text = "Start: "+campaign.start.toDate().toString()
-        holder.end.text = "End: "+campaign.end.toDate().toString()
+        holder.start.text = "Start: "+ dateandtimeformat.formatFirebaseDateTime(campaign.start)
+        holder.end.text = "End: "+dateandtimeformat.formatFirebaseDateTime(campaign.end)
         holder.hospital.text = "By: "+campaign.hospitalname
 
     }

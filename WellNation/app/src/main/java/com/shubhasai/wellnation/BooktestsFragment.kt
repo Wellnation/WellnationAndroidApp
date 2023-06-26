@@ -12,6 +12,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.shubhasai.wellnation.databinding.FragmentBooktestsBinding
+import com.shubhasai.wellnation.utils.DialogUtils
 
 class BooktestsFragment : Fragment(),TestAdapter.TestClicked {
     private lateinit var binding:FragmentBooktestsBinding
@@ -50,5 +51,6 @@ class BooktestsFragment : Fragment(),TestAdapter.TestClicked {
         val db = FirebaseFirestore.getInstance().collection("testHistory")
         val testdata = testbookingdata(hid = testlist.hid, hname = testlist.hospitalname, patientid = Userinfo.userid, pname = Userinfo.uname, tid = testlist.testid, tname = testlist.testname)
         db.document().set(testdata)
+        activity?.let { DialogUtils.showLottieBottomSheetDialog(it,R.raw.done,"Test Booked Successfully") }
     }
 }

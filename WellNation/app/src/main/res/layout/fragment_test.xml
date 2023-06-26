@@ -1,14 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent"
     tools:context=".TestFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
-
-</FrameLayout>
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:id="@+id/pasttestsrv"
+            android:layout_height="wrap_content"/>
+        <View
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/rectangular_button"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:textSize="16sp"
+            android:text="Test Report Summary"
+            android:textStyle="bold"
+            android:layout_marginTop="30dp"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:id="@+id/testReportSummary"
+            android:textSize="14sp"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</ScrollView>

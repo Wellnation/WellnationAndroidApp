@@ -1,19 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".EmergencyActivity">
-
-    <com.airbnb.lottie.LottieAnimationView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        app:lottie_rawRes="@raw/emergency" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <Switch
+            android:padding="10dp"
+            android:text="Turn Off"
+            android:id="@+id/btn_switchOff"
+            android:layout_width="wrap_content"
+            android:layout_gravity="end"
+            android:layout_height="wrap_content"/>
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/emergency" />
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_weight="5"
+                android:hint="Message"
+                app:boxCornerRadiusBottomEnd="10dp"
+                app:boxCornerRadiusBottomStart="10dp"
+                app:startIconDrawable="@drawable/ic_emailicon"
+                app:startIconTint="@color/royal_blue"
+                app:boxCornerRadiusTopEnd="10dp"
+                app:boxCornerRadiusTopStart="10dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:textSize="14sp"
+                    android:id="@+id/etmsgl"
+                    android:inputType="textMultiLine"
+                    android:layout_height="match_parent"/>
+            </com.google.android.material.textfield.TextInputLayout>
+            <ImageView
+                android:layout_width="0dp"
+                android:padding="5dp"
+                android:id="@+id/btn_send"
+                android:layout_weight="1"
+                android:src="@drawable/ic_send"
+                android:layout_height="50dp"/>
+        </LinearLayout>
+        <TextView
+            android:layout_marginStart="20dp"
+            android:textSize="18sp"
+            android:layout_marginTop="30dp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:text="Live Ambulance Location"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/ambulancemapview"
+            mapType="normal"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="10dp"
+            android:apiKey="AIzaSyAOjr36nWK1pfruFvU8w49Pb_BKZSmWlYk"
+            android:clickable="true"
+            android:enabled="true"
+            android:focusable="true" />
+
+        <TextView
+            android:layout_marginStart="20dp"
+            android:textSize="18sp"
+            android:layout_marginTop="30dp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:text="Emergency Updates"
+            android:layout_height="wrap_content"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:id="@+id/EmergencyLogRv"
+            android:layout_marginHorizontal="10dp"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+
+</ScrollView>

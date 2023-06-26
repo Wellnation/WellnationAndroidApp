@@ -1,10 +1,12 @@
 package com.shubhasai.wellnation
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -12,6 +14,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -47,24 +50,66 @@ class HealthpassportFragment : Fragment() {
         return binding.root
     }
 
-    private fun generateQRCode(data: String, size: Int, color: Int): Bitmap? {
+    private fun generateQRCode(data: String, size: Int, color: Int, context: Context): Bitmap? {
         try {
             val writer = QRCodeWriter()
             val bitMatrix: BitMatrix = writer.encode(data, BarcodeFormat.QR_CODE, size, size)
             val width = bitMatrix.width
             val height = bitMatrix.height
-            val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565)
+
+            // Create a bitmap with transparent background
+            val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+            bitmap.eraseColor(Color.TRANSPARENT)
+
+            val logoDrawable = ContextCompat.getDrawable(context, R.drawable.wn_circle)
+            val logoBitmap = logoDrawable?.let {
+                val logoSize = size / 4 // Adjust the logo size as desired
+                Bitmap.createScaledBitmap(drawableToBitmap(it), logoSize, logoSize, false)
+            }
+            val color = ContextCompat.getColor(context, R.color.Navy_Blue)
+
             for (x in 0 until width) {
                 for (y in 0 until height) {
-                    bitmap.setPixel(x, y, if (bitMatrix.get(x, y)) color else Color.WHITE)
+                    if (bitMatrix.get(x, y)) {
+                        bitmap.setPixel(x, y, color)
+                    }
+
+                    // Check if the pixel is within the logo area
+                    if (logoBitmap != null && x >= width / 2 - logoBitmap.width / 2 &&
+                        x < width / 2 + logoBitmap.width / 2 &&
+                        y >= height / 2 - logoBitmap.height / 2 &&
+                        y < height / 2 + logoBitmap.height / 2
+                    ) {
+                        // Calculate the corresponding position inside the logo
+                        val logoPixelX = x - (width / 2 - logoBitmap.width / 2)
+                        val logoPixelY = y - (height / 2 - logoBitmap.height / 2)
+
+                        // Set the pixel color from the logo bitmap
+                        bitmap.setPixel(x, y, logoBitmap.getPixel(logoPixelX, logoPixelY))
+                    }
                 }
             }
+
             return bitmap
         } catch (e: WriterException) {
             e.printStackTrace()
         }
         return null
     }
+
+    private fun drawableToBitmap(drawable: Drawable): Bitmap {
+        if (drawable is BitmapDrawable) {
+            return drawable.bitmap
+        }
+        val bitmap = Bitmap.createBitmap(drawable.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        drawable.setBounds(0, 0, canvas.width, canvas.height)
+        drawable.draw(canvas)
+        return bitmap
+    }
+
+
+
     fun readUserDetails(){
         val firestore = FirebaseFirestore.getInstance()
 
@@ -99,7 +144,12 @@ class HealthpassportFragment : Fragment() {
                             val vitals = documents.toObject(vitals::class.java)
                             qrdata = qrdata+"|"+"bloodgroup="+vitals?.bloodgroup+"|"+"height="+vitals?.height+"|"+"weight="+vitals?.weight+"|"+"birthmark="+vitals?.birthmark+"|"+"diseases="+vitals?.diseases.toString()+"|"+"UserId="+Userinfo.userid
 
-                            val bitmap = generateQRCode(qrdata, 500, R.color.Navy_Blue)
+                            val bitmap =
+                                activity?.let {
+                                    generateQRCode(qrdata, 1000, Color.rgb(255,193,7),
+                                        it
+                                    )
+                                }
                             binding.qrCode.setImageBitmap(bitmap)
                         }
 

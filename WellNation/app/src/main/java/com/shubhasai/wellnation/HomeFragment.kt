@@ -19,9 +19,20 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.shubhasai.wellnation.databinding.FragmentHomeBinding
 import android.Manifest
+import android.content.Context
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.Timestamp
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(),UpcomingAppointmentAdapter.ApptClicked,MyTestAdapter.ApptClicked {
     private lateinit var binding: FragmentHomeBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,7 +69,11 @@ class HomeFragment : Fragment() {
             val directions = HomeFragmentDirections.actionHomeFragmentToAmbulanceFragment()
             findNavController().navigate(directions)
         }
-        binding.tvUsername.text = "Hey, "+Userinfo.uname + "!"
+
+        val firstName = getFirstName(Userinfo.uname)
+        val timeOfDay = getTimeOfDay()
+        val greeting = getGreeting(firstName, timeOfDay)
+        binding.tvUsername.text = greeting
         binding.btnAppointments.setOnClickListener {
             val directions = HomeFragmentDirections.actionHomeFragmentToAppointmentFragment()
             findNavController().navigate(directions)
@@ -87,7 +102,107 @@ class HomeFragment : Fragment() {
             val direction = HomeFragmentDirections.actionHomeFragmentToBlogFragment()
             view?.findNavController()?.navigate(direction)
         }
+        binding.rvUpcomingAppointment.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
+        getmyappointment()
+        binding.rvUpcomingTests.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
+        getmytest()
+        binding.profileIcon.setOnClickListener {
+            val direction = HomeFragmentDirections.actionHomeFragmentToHealthpassportFragment()
+            view?.findNavController()?.navigate(direction)
+        }
+        carosel()
+        binding.btnTestreports.setOnClickListener {
+            val direction = HomeFragmentDirections.actionHomeFragmentToTestFragment()
+            view?.findNavController()?.navigate(direction)
+        }
         return binding.root
+    }
+    fun carosel(){
+        val carouselItems = listOf(
+            carouseldata(R.drawable.carouselhealthscore),
+            carouseldata(R.drawable.carouselhelp)
+        )
+        val carouselRecyclerView = binding.carouselRecyclerView
+        carouselRecyclerView.layoutManager =
+            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+
+        val carouselAdapter = CarouselAdapter(carouselItems) { position ->
+            // Handle item click
+            val selectedItem = carouselItems[position]
+            when(position){
+                0->{
+                    val direction = HomeFragmentDirections.actionHomeFragmentToPhysiqueFragment()
+                    findNavController().navigate(direction)
+                }
+                1->{
+                    val direction = HomeFragmentDirections.actionHomeFragmentToHelpFragment()
+                    findNavController().navigate(direction)
+                }
+            }
+        }
+        carouselRecyclerView.adapter = carouselAdapter
+        
+    }
+    fun getmyappointment(){
+        val db = Firebase.firestore
+        val appotlists : ArrayList<AppointmentData> =  ArrayList()
+        val collectionRef = db.collection("appointments").orderBy("shldtime", Query.Direction.ASCENDING)
+        collectionRef.get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    val appointment = document.toObject(AppointmentData::class.java)
+                    if (appointment.pid == Userinfo.userid && (appointment.shldtime.toDate().after(
+                            Timestamp.now().toDate()))){
+                        appotlists.add(appointment)
+                    }
+                }
+                binding.rvUpcomingAppointment.adapter = UpcomingAppointmentAdapter(activity as Context?,appotlists,this)
+            }
+            .addOnFailureListener { exception ->
+                Log.d("Firebase", "Error getting Hospitals documents: ", exception)
+            }
+    }
+    fun getmytest(){
+        val db = Firebase.firestore
+        val appotlists : ArrayList<testbookingdata> =  ArrayList()
+        val collectionRef = db.collection("testHistory").orderBy("shldtime", Query.Direction.ASCENDING)
+        collectionRef.get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    val appointment = document.toObject(testbookingdata::class.java)
+                    if (appointment.patientid == Userinfo.userid && (appointment.shldtime.toDate().after(
+                            Timestamp.now().toDate()))){
+                        appotlists.add(appointment)
+                    }
+                }
+                binding.rvUpcomingTests.adapter = MyTestAdapter(activity as Context?,appotlists,this)
+            }
+            .addOnFailureListener { exception ->
+                Log.d("Firebase", "Error getting Hospitals documents: ", exception)
+            }
+    }
+    fun getFirstName(username: String): String {
+        val firstName = username.trim().split(" ")[0]
+        return firstName
+    }
+    fun getTimeOfDay(): String {
+        val currentTime = Calendar.getInstance().time
+        val dateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+        val currentTimeString = dateFormat.format(currentTime)
+        val currentTimeValue = dateFormat.parse(currentTimeString)
+        val morningTime = dateFormat.parse("00:00")
+        val afternoonTime = dateFormat.parse("12:00")
+        val nightTime = dateFormat.parse("18:00")
+
+        return when (currentTimeValue) {
+            in morningTime..afternoonTime -> "morning"
+            in afternoonTime..nightTime -> "afternoon"
+            else -> "Evening"
+        }
+    }
+
+    fun getGreeting(firstName: String, timeOfDay: String): String {
+        return "Good $timeOfDay, $firstName !"
     }
     private fun backbuttonpressed(){
         val shouldInterceptBackPress = true

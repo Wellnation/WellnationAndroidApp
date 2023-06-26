@@ -8,13 +8,14 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:elevation="5dp"
-        app:cardCornerRadius="5dp"
+        app:cardCornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
+            android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
@@ -22,10 +23,10 @@
 
             <ImageView
                 android:id="@+id/test_image"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_margin="10dp"
-                android:src="@drawable/ic_campaign" />
+                android:src="@drawable/campaignicon" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -34,12 +35,13 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:textStyle="bold"
                     android:id="@+id/tvcampaignname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:text="Campaign Name"
-                    android:textSize="18sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/campaign_hospitalname"
@@ -62,16 +64,20 @@
                     android:layout_marginLeft="10dp"
                     android:text="Hospital Name"
                     android:textSize="12sp" />
-
-                </LinearLayout>
                 <Button
-                    android:padding="5dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:padding="10dp"
+                    android:layout_marginTop="20dp"
                     android:text="Navigate"
-                    android:layout_gravity="end|bottom"
+                    android:layout_gravity="bottom"
                     android:layout_marginEnd="10dp"
-                    android:layout_width="wrap_content"
+                    android:background="@drawable/rectangular_button"
+                    android:layout_width="match_parent"
                     android:id="@+id/btn_navigate_campaign"
                     android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
             </LinearLayout>
 
     </androidx.cardview.widget.CardView>

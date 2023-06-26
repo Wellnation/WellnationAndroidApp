@@ -27,6 +27,7 @@
 
         <TextView
             android:textStyle="bold"
+            android:textColor="@color/black"
             android:id="@+id/dropdown_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -39,7 +40,6 @@
             android:layout_height="wrap_content"
             android:entries="@array/radius_options"
             android:gravity="center"
-            android:textColor="@color/Baby_Blue"
             android:spinnerMode="dropdown" />
 
     </LinearLayout>

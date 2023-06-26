@@ -3,7 +3,7 @@ package com.shubhasai.wellnation
 import com.google.firebase.Timestamp
 
 data class testbookingdata(
-    var attatchment:String = "",
+    var attachment:String = "",
     var hid:String = "",
     var hname:String = "",
     var patientid:String = "",
@@ -13,4 +13,5 @@ data class testbookingdata(
     var status:Boolean = false,
     var tid:String = "",
     var tname:String = "",
+    var llmOutput:String ="",
 )

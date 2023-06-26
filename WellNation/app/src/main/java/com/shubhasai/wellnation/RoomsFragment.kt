@@ -42,7 +42,6 @@ class RoomsFragment : Fragment() {
                         roomlist.add(rooms)
                     }
                 }
-                binding.rvhospitalrooms.adapter = RoomAdapter(activity,roomlist)
             }
             .addOnFailureListener { exception ->
                 Log.d("Firebase", "Error getting Hospitals documents: ", exception)
