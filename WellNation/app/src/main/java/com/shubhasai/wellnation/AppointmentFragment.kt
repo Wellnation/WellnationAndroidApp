@@ -74,7 +74,7 @@ class AppointmentFragment : Fragment(),AppointmentAdapter.ApptClicked {
         }
         else if(appt.shldtime.toDate().after(Timestamp.now().toDate()) && appt.onlinemode){
             Toast.makeText(activity,"Meet Code has been sent via Notification",Toast.LENGTH_SHORT).show()
-            val url = "https://wellnation.vercel.app/patients/${Userinfo.userid}/chat" // Replace with your desired URL
+            val url = "https://wellnation.live/patients/${Userinfo.userid}/chat" // Replace with your desired URL
 
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse(url)

@@ -45,7 +45,7 @@ class HospitalisationFragment : Fragment(),HospitalisationAdapter.Hospitalisatio
     }
 
     override fun onHospitalisationClicked(data:hospitalisationdata) {
-        val directions = HospitalisationFragmentDirections.actionHospitalisationFragmentToHospitalisationdetailsFragment(data.apptId)
+        val directions = HospitalisationFragmentDirections.actionHospitalisationFragmentToHospitalisationdetailsFragment(data.id)
         findNavController().navigate(directions)
     }
 }

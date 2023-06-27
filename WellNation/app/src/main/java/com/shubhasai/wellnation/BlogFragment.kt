@@ -38,7 +38,7 @@ class BlogFragment : Fragment(),BlogAdapter.BlogClicked {
                     blogs.add(blog)
                 }
             }
-            binding.blogRecyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+            binding.blogRecyclerView.layoutManager = LinearLayoutManager(activity)
             binding.blogRecyclerView.adapter = BlogAdapter(activity, blogs,this)
         }
     }

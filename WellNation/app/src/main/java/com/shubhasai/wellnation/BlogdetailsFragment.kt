@@ -9,6 +9,7 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.google.firebase.firestore.FirebaseFirestore
 import com.shubhasai.wellnation.databinding.FragmentBlogdetailsBinding
+import com.shubhasai.wellnation.utils.dateandtimeformat
 
 class BlogdetailsFragment : Fragment() {
     private lateinit var binding: FragmentBlogdetailsBinding
@@ -32,7 +33,8 @@ class BlogdetailsFragment : Fragment() {
             binding.dblogTitle.text = it.getString("title")
             binding.dblogContent.text = it.getString("body")
             binding.dblogAuthor.text = it.getString("drname")
-            binding.dblogDate.text = it.getTimestamp("time")?.toDate().toString()
+            binding.dblogDate.text = it.getTimestamp("time")?.toDate()
+                ?.let { it1 -> dateandtimeformat.formatSocialTime(it1) }
             val url = it.getString("imageurl")
             Glide.with(context!!).load(url).into(binding.dblogImage)
         }

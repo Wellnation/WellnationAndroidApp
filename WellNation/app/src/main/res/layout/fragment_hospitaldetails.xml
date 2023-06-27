@@ -112,6 +112,7 @@
                     app:tabIndicator="@drawable/tabindicator"
                     app:tabIndicatorAnimationMode="elastic"
                     app:tabIndicatorColor="@null"
+                    app:tabTextColor="@color/Orange"
                     app:tabIndicatorGravity="stretch"
                     android:background="@drawable/tabbackground"
                     app:tabMode="fixed"

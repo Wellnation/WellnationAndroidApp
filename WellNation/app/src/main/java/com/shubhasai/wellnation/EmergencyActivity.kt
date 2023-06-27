@@ -80,7 +80,7 @@ class EmergencyActivity : AppCompatActivity() {
                 firebase.update("isLive",true)
             }
         }
-        getLastLocation()
+
         //getlogs(Userinfo.emergencykey)
     }
 
@@ -96,7 +96,7 @@ class EmergencyActivity : AppCompatActivity() {
                     Userinfo.uname = user.name
                     Userinfo.phonenumber = user.phone
                 }
-
+                getLastLocation()
             }
         }.addOnFailureListener { exception ->
             Log.w("Firebase Execption", "Error getting user details", exception)

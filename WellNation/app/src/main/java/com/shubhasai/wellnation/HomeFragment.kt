@@ -19,7 +19,9 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.shubhasai.wellnation.databinding.FragmentHomeBinding
 import android.Manifest
+import android.content.ActivityNotFoundException
 import android.content.Context
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.Timestamp
@@ -27,6 +29,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.shubhasai.wellnation.utils.DialogUtils
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -193,6 +196,10 @@ class HomeFragment : Fragment(),UpcomingAppointmentAdapter.ApptClicked,MyTestAda
                 Log.d("Firebase", "Error getting Hospitals documents: ", exception)
             }
     }
+
+    override fun onupcomingTestClicked(test: testbookingdata) {
+        activity?.let { DialogUtils.showLottieBottomSheetDialog(it,R.raw.notified,"You will be Notified Shortly") }
+    }
     fun getFirstName(username: String): String {
         val firstName = username.trim().split(" ")[0]
         return firstName
@@ -253,6 +260,21 @@ class HomeFragment : Fragment(),UpcomingAppointmentAdapter.ApptClicked,MyTestAda
         }
     }
 
-
+    override fun onviewmoreclicked(appt: AppointmentData) {
+        if (appt.onlinemode == true){
+            Toast.makeText(activity,"Meet Code will be sent to you soon", Toast.LENGTH_SHORT).show()
+            val url = "https://wellnation.live/patients/${Userinfo.userid}/chat" // Replace with your desired URL
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(url)
+            try {
+                startActivity(intent)
+            } catch (e: ActivityNotFoundException) {
+                // Handle the exception as needed
+            }
+        }
+        else{
+            activity?.let { DialogUtils.showLottieBottomSheetDialog(it,R.raw.notified,"You will be Notified Shortly") }
+        }
+    }
 
 }

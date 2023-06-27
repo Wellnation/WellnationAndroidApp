@@ -25,6 +25,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -32,6 +34,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import com.shubhasai.wellnation.databinding.FragmentAutomatebookingBinding
+import com.shubhasai.wellnation.utils.DialogUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -42,6 +45,9 @@ import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class AutomatebookingFragment : Fragment(),DepartmentAdapter.DeptClicked {
     private lateinit var binding: FragmentAutomatebookingBinding
@@ -235,22 +241,46 @@ class AutomatebookingFragment : Fragment(),DepartmentAdapter.DeptClicked {
             }
     }
     override fun onbooknowclicked(dept: DepartmentData,hids:HospitalList) {
-        bookappointment(hids.uid)
+        val datePicker: MaterialDatePicker<Long> = MaterialDatePicker
+            .Builder
+            .datePicker()
+            .setInputMode(MaterialDatePicker.INPUT_MODE_TEXT)
+            .setTitleText("Select date of Appointment")
+            .build()
+        datePicker.show(parentFragmentManager, "DATE_PICKER")
+
+        datePicker.addOnPositiveButtonClickListener { selection ->
+            selectedDate = selection
+            val timePicker: MaterialTimePicker = MaterialTimePicker
+                .Builder()
+                .setTitleText("Select a time")
+                .setInputMode(MaterialTimePicker.INPUT_MODE_KEYBOARD)
+                .build()
+            timePicker.show(parentFragmentManager, "TIME_PICKER")
+
+            timePicker.addOnPositiveButtonClickListener { selection ->
+                selectedTime = timePicker.hour * 60 + timePicker.minute
+                updateSelectedDateTimeText(hids.uid,dept.name)
+            }
+        }
+
     }
-    fun bookappointment(hid:String){
+    var selectedDate: Long? = null
+    var selectedTime: Int? = null
+    fun bookappointment(hid:String,deptname:String,timestamp: Timestamp){
         val builder = AlertDialog.Builder(activity)
         builder.setTitle("Appointment Booking")
         builder.setMessage("Please select the mode of appointment booking:")
-
         // Online button
         builder.setPositiveButton("Online") { _, _ ->
             // Handle online booking logic here
             val medicine:ArrayList<medicines> = ArrayList()
             val db =  Firebase.firestore.collection("appointments")
             val key = db.document().id
-            val booking_details = AppointmentData(apptId = key,"",hid,medicine,Userinfo.userid, remark = "", reqtime = Timestamp.now(), shldtime = Timestamp.now(), status = false, symptoms = binding.etSymptoms.text.toString(), dept = departmentselected,onlinemode = true)
+            val booking_details = AppointmentData(apptId = key,"",hid,medicine,Userinfo.userid, remark = "", reqtime = timestamp, shldtime = Timestamp.now(), status = false, symptoms = binding.etSymptoms.text.toString(), dept = deptname,onlinemode = true)
             db.document(key).set(booking_details)
-            Toast.makeText(activity,"Booked Successfully. Once the Appointment will be scheduled We will be notified. And dont forget to check scheduled appointment tab.", Toast.LENGTH_LONG).show()
+            activity?.let { DialogUtils.showLottieBottomSheetDialog(it,
+                com.shubhasai.wellnation.R.raw.done,"Appointment Booked Successfully") }
         }
 
         // Offline button
@@ -259,13 +289,33 @@ class AutomatebookingFragment : Fragment(),DepartmentAdapter.DeptClicked {
             val medicine:ArrayList<medicines> = ArrayList()
             val db =  Firebase.firestore.collection("appointments")
             val key = db.document().id.toString()
-            val booking_details = AppointmentData(key,"",hid,medicine,Userinfo.userid, remark = "", reqtime = Timestamp.now(), shldtime = Timestamp.now(), status = false, symptoms = binding.etSymptoms.text.toString(), dept = departmentselected,onlinemode = false)
+            val booking_details = AppointmentData(key,"",hid,medicine,Userinfo.userid, remark = "", reqtime = timestamp, shldtime = Timestamp.now(), status = false, symptoms = binding.etSymptoms.text.toString(), dept = deptname,onlinemode = false)
             db.document(key).set(booking_details)
-            Toast.makeText(activity,"Booked Successfully. Once the Appointment will be scheduled We will be notified. And dont forget to check scheduled appointment tab.", Toast.LENGTH_LONG).show()
+            activity?.let { DialogUtils.showLottieBottomSheetDialog(it,
+                com.shubhasai.wellnation.R.raw.done,"Appointment Booked Successfully") }
         }
 
         val dialog = builder.create()
         dialog.show()
+    }
+    fun updateSelectedDateTimeText(hid:String,dept:String) {
+        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val date = selectedDate?.let { sdf.format(it) } ?: ""
+        val time = selectedTime?.let { String.format("%02d:%02d", it / 60, it % 60) } ?: ""
+
+        if (selectedDate != null && selectedTime != null) {
+            val calendar = Calendar.getInstance()
+            calendar.timeInMillis = selectedDate!!
+            calendar.set(Calendar.HOUR_OF_DAY, selectedTime!! / 60)
+            calendar.set(Calendar.MINUTE, selectedTime!! % 60)
+            calendar.set(Calendar.SECOND, 0)
+            calendar.set(Calendar.MILLISECOND, 0)
+
+            val combinedTimestamp = Timestamp(calendar.time)
+            // Save the combinedTimestamp to Firebase Firestore
+            bookappointment(hid,dept,combinedTimestamp)
+            // ...
+        }
     }
     private fun requestAudioPermissions() {
         val permission = Manifest.permission.RECORD_AUDIO

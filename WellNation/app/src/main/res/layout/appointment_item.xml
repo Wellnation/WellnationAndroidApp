@@ -75,6 +75,7 @@
 
             <Button
                 android:padding="5dp"
+                android:background="@drawable/rectangular_button"
                 android:text="View Details"
                 android:layout_width="match_parent"
                 android:id="@+id/btn_viewapptdetails"

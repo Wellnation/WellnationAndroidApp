@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.firebase.firestore.FirebaseFirestore
 import com.shubhasai.wellnation.databinding.FragmentProfileeditBinding
+import com.shubhasai.wellnation.utils.DialogUtils
 
 class ProfileeditFragment : Fragment() {
     private lateinit var binding: FragmentProfileeditBinding
@@ -88,7 +89,9 @@ class ProfileeditFragment : Fragment() {
         val hashMap:HashMap<String,Any> = HashMap()
         val userdetails = userdetails(name = Userinfo.uname, email = Userinfo.email, phone = Userinfo.phonenumber,gender = gender, dob = dob, emergencyNumber = emergencyContact, address = address, userid = Userinfo.userid, familyId = Userinfo.familyId)
         userDetailsCollectionRef.document(Userinfo.userid).collection("vitals").document("info").set(vitals)
-        userDetailsCollectionRef.document(Userinfo.userid).set(userdetails)
+        userDetailsCollectionRef.document(Userinfo.userid).set(userdetails).addOnSuccessListener {
+            activity?.let { it1 -> DialogUtils.showLottieBottomSheetDialog(it1,R.raw.saved,"Your Profile Has Been Updated") }
+        }
 
     }
     fun getdiseaseslist(){
@@ -109,6 +112,8 @@ class ProfileeditFragment : Fragment() {
         text.split(",").forEach {
             diseases.add(disease(it))
         }
-        db.update("diseases", diseases)
+        db.update("diseases", diseases).addOnSuccessListener {
+            activity?.let { it1 -> DialogUtils.showLottieBottomSheetDialog(it1,R.raw.saved,"Diseases List Have Been Updated") }
+        }
     }
 }

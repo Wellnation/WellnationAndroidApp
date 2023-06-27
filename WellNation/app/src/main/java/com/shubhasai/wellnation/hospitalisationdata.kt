@@ -4,7 +4,7 @@ import com.google.firebase.Timestamp
 
 
 data class hospitalisationdata(
-    val apptId: String = "",
+    val id: String = "",
     val bedId: String="",
     val dateAdmitted: Timestamp=Timestamp.now(),
     val dateReleased: Timestamp=Timestamp.now(),
